@@ -171,7 +171,7 @@ def load_csv_data(filename):
                 for key, value in row.items():
                     cleaned_value = clean_value(value)
                     if cleaned_value is not None:
-                        cleaned_row[key.strip()] = cleaned_value
+                        cleaned_row[key] = cleaned_value
                 data.append(cleaned_row)
                 
     except Exception as e:
