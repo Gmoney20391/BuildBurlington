@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Burlington - Solving Our Housing Crisis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .hero-pattern {
+            background-color: #1a365d;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233366cc' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .crisis-card {
+            transition: all 0.3s ease;
+        }
+        .crisis-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .section-preview {
+            border-left: 4px solid #1a365d;
+            background: linear-gradient(to right, #dbeafe, #eff6ff);
+        }
+        .hamburger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #4b5563;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu-open {
+            max-height: 500px;
+        }
+        
+        /* Custom breakpoint to prevent hamburger and menu items from showing simultaneously */
+        @media (max-width: 950px) {
+            .nav-items {
+                display: none;
+            }
+            
+            .hamburger-button {
+                display: block;
+            }
+        }
+        
+        @media (min-width: 951px) {
+            .nav-items {
+                display: flex;
+            }
+            
+            .hamburger-button {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: none;
+            }
+        }
+        
+        .navy-shadow {
+            box-shadow: 0 4px 6px -1px rgba(26, 54, 93, 0.1), 0 2px 4px -1px rgba(26, 54, 93, 0.06);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center py-2 text-blue-600">
+                        <span class="font-bold text-xl" style="color: #1a365d;">BuildBurlington</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Items -->
+                <div class="nav-items items-center space-x-6">
+                    <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
+                    <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
+                    <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
+                    <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
+                    <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300" style="background-color: #1a365d;">Support the Policy</a>
+                </div>
+                
+                <!-- Hamburger Button -->
+                <div class="hamburger-button">
+                    <button id="hamburger-btn" class="focus:outline-none">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu bg-white">
+                <div class="px-2 pt-2 pb-4 space-y-1">
+                    <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
+                    <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
+                    <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
+                    <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
+                    <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
+                    <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2" style="background-color: #1a365d;">Support the Policy</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Hamburger menu functionality
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburgerBtn.classList.toggle('hamburger-active');
+            mobileMenu.classList.toggle('mobile-menu-open');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = mobileMenu.contains(e.target);
+            const isClickOnHamburger = hamburgerBtn.contains(e.target);
+            
+            if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
+                hamburgerBtn.classList.remove('hamburger-active');
+                mobileMenu.classList.remove('mobile-menu-open');
+            }
+        });
+        
+        // Close menu when a link is clicked
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('hamburger-active');
+                mobileMenu.classList.remove('mobile-menu-open');
+            });
+        });
+    </script>
+
+    <!-- Hero Section -->
+    <section class="hero-pattern py-16 md:py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-10">
+                <!-- Text Content - Full width on mobile/tablet, half on desktop -->
+                <div class="w-full lg:w-1/2 text-white text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Burlington is facing a <span class="text-yellow-300">housing crisis</span></h1>
+                    <p class="text-xl mb-8">Our restrictive zoning laws are making it impossible for young people, seniors, and families to afford homes in our community. But there's a solution.</p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="/solution" class="px-8 py-3 bg-white font-semibold rounded-lg navy-shadow hover:bg-gray-100 transition-colors duration-300" style="color: #1a365d;">Learn the Solution</a>
+                        <a href="/action" class="px-8 py-3 border-2 border-yellow-400 bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-yellow-500 hover:border-yellow-500 transition-colors duration-300">Take Action</a>
+                    </div>
+                </div>
+                
+                <!-- Interactive Calculator - Full width on mobile/tablet, half on desktop -->
+                <div class="w-full lg:w-1/2">
+                    <div class="bg-white rounded-xl navy-shadow p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center lg:text-left" style="color: #1a365d;">See how the crisis affects you</h3>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Your annual household income:</label>
+                            <input type="range" min="40000" max="400000" value="89300" class="w-full" id="income-slider">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>$40k</span>
+                                <span id="income-value" class="font-bold">$89,300</span>
+                                <span>$400k</span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Your savings per year:</label>
+                            <input type="range" min="5000" max="50000" value="15000" class="w-full" id="savings-slider">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>$5k</span>
+                                <span id="savings-value" class="font-bold">$15,000</span>
+                                <span>$50k</span>
+                            </div>
+                        </div>
+                        <div id="simulator-results" class="space-y-4">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Home page income slider
+        const incomeSlider = document.getElementById('income-slider');
+        const incomeValue = document.getElementById('income-value');
+        const savingsSlider = document.getElementById('savings-slider');
+        const savingsValue = document.getElementById('savings-value');
+        const simulatorResults = document.getElementById('simulator-results');
+        
+        function updateCalculator() {
+            const income = parseInt(incomeSlider.value);
+            const savings = parseInt(savingsSlider.value);
+            incomeValue.textContent = `$${income.toLocaleString()}`;
+            savingsValue.textContent = `$${savings.toLocaleString()}`;
+            
+            const affordablePrice = income * 4;
+            const downPaymentYears = ((1100000 * 0.2) / savings).toFixed(1);
+            const affordableMortgage = (affordablePrice * 0.05 / 12).toFixed(0);
+            const actualMortgage = (1100000 * 0.05 / 12).toFixed(0);
+            
+            simulatorResults.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span>Affordable home price:</span>
+                    <span class="font-bold text-green-600">$${affordablePrice.toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Actual Burlington median price:</span>
+                    <span class="font-bold text-red-600">$1,100,000</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Monthly mortgage payment (at affordable price):</span>
+                    <span class="font-bold">$${affordableMortgage}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Monthly mortgage payment (at actual price):</span>
+                    <span class="font-bold text-red-600">$${actualMortgage}</span>
+                </div>
+                <div class="flex justify-between items-center border-t pt-2">
+                    <span>Years to save a 20% down payment:</span>
+                    <span class="font-bold text-red-600">${downPaymentYears} years</span>
+                </div>
+            `;
+        }
+        
+        // Initialize the calculator
+        if (incomeSlider && savingsSlider) {
+            incomeSlider.addEventListener('input', updateCalculator);
+            savingsSlider.addEventListener('input', updateCalculator);
+            updateCalculator();
+        }
+    </script>
+
+    <!-- Crisis Indicators -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12" style="color: #1a365d;">By the numbers: Burlington's housing crisis</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="crisis-card bg-blue-50 p-6 rounded-xl border-l-4 border-red-500">
+                    <div class="text-4xl font-bold text-red-600 mb-2">12.3x</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Price-to-Income Ratio</h3>
+                    <p class="text-gray-600">Burlington homes cost <span class="font-bold">12.3 times</span> the median household income. A healthy ratio is 4x.</p>
+                </div>
+                <div class="crisis-card bg-blue-50 p-6 rounded-xl border-l-4 border-red-500">
+                    <div class="text-4xl font-bold text-red-600 mb-2">1.8%</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Vacancy Rate</h3>
+                    <p class="text-gray-600">Rental vacancy is at a crisis level. A healthy market has 3-4% vacancy.</p>
+                </div>
+                <div class="crisis-card bg-blue-50 p-6 rounded-xl border-l-4 border-red-500">
+                    <div class="text-4xl font-bold text-red-600 mb-2">#1</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Worst in Construction</h3>
+                    <p class="text-gray-600">Burlington has the <span class="font-bold">lowest construction rate</span> per capita compared to cities around the GTA.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/problem" class="px-6 py-3 text-white font-medium rounded-lg navy-shadow" style="background-color: #1a365d;">Explore the Full Data</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section Preview -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16" style="color: #1a365d;">Understanding the Problem</h2>
+            
+            <!-- Price vs Income Section -->
+            <div class="flex flex-col lg:flex-row gap-10 mb-20">
+                <div class="w-full lg:w-2/3">
+                    <div class="section-preview p-6 rounded-xl h-full navy-shadow">
+                        <h3 class="text-2xl font-semibold mb-4" style="color: #1a365d;">Price vs. Income Growth (After Tax)</h3>
+                        <p class="text-gray-700 mb-6">While incomes have stagnated, housing prices have skyrocketed, creating an impossible affordability gap.</p>
+                        <div class="h-64">
+                            <canvas id="preview-price-income-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/3 flex items-center">
+                    <div class="p-6 rounded-lg navy-shadow text-white" style="background-color: #1a365d;">
+                        <h4 class="text-lg font-semibold mb-3">Why This Matters</h4>
+                        <p class="text-sm">When home prices grow much faster than incomes, homeownership becomes unattainable for most residents. This chart shows how Burlington's housing market has become increasingly disconnected from what people can actually afford.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comparison Section -->
+            <div class="section-preview p-6 rounded-xl mb-20 navy-shadow">
+                <h3 class="text-2xl font-semibold mb-4" style="color: #1a365d;">How Burlington Compares</h3>
+                <p class="text-gray-700 mb-6">Burlington has one of the worst housing metrics in the GTA.</p>
+                <div class="h-64">
+                    <canvas id="preview-comparison-chart"></canvas>
+                </div>
+                <div class="text-center mt-6">
+                    <a href="/problem" class="font-semibold hover:underline" style="color: #1a365d;">See full comparison →</a>
+                </div>
+            </div>
+            
+            <!-- Housing Gap Section -->
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="w-full lg:w-1/3 flex items-center">
+                    <div class="p-6 rounded-lg navy-shadow text-white" style="background-color: #1a365d;">
+                        <h4 class="text-lg font-semibold mb-3">The Housing Gap Explained</h4>
+                        <p class="text-sm">Burlington has consistently built fewer homes than needed to keep up with population growth. This supply shortage is a primary driver of our affordability crisis, as demand far outstrips available housing.</p>
+                    </div>
+                </div>
+                <div class="w-full lg:w-2/3">
+                    <div class="section-preview p-6 rounded-xl h-full navy-shadow">
+                        <h3 class="text-2xl font-semibold mb-4" style="color: #1a365d;">The Growing Housing Gap</h3>
+                        <p class="text-gray-700 mb-6">Burlington has consistently built fewer homes than needed to keep up with population growth.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-700">Homes needed:</span>
+                                    <span class="font-bold">82,918</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4">
+                                    <div class="bg-red-600 h-4 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-700">Homes available:</span>
+                                    <span class="font-bold">75,971</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4">
+                                    <div class="h-4 rounded-full" style="width: 91.6%; background-color: #16a34a;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <a href="/problem" class="font-semibold hover:underline" style="color: #1a365d;">Explore housing gap data →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section Preview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" style="color: #1a365d;">The Solution: Missing Middle Housing</h2>
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto">We need to reform Burlington's zoning laws to allow more diverse housing types in residential neighborhoods.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4" style="color: #1a365d;">What is "Missing Middle" Housing?</h3>
+                    <p class="text-gray-700 mb-6">These are medium-density housing types like duplexes, triplexes, fourplexes, townhomes, and laneway suites that fit seamlessly into existing neighborhoods.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="p-2 rounded-full mr-4" style="background-color: rgba(26, 54, 93, 0.1);">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold" style="color: #1a365d;">Creates gentle density</h4>
+                                <p class="text-gray-600 text-sm">Uses existing infrastructure without overwhelming neighborhoods</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="p-2 rounded-full mr-4" style="background-color: rgba(26, 54, 93, 0.1);">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold" style="color: #1a365d;">Provides naturally affordable options</h4>
+                                <p class="text-gray-600 text-sm">More units per lot means lower prices for homeowners and renters</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-6 rounded-xl navy-shadow" style="background-color: rgba(26, 54, 93, 0.05);">
+                    <h3 class="text-xl font-semibold mb-4" style="color: #1a365d;">Our Policy Proposal</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 bg-white rounded-lg navy-shadow">
+                            <div class="text-2xl font-bold mr-4" style="color: #1a365d;">1</div>
+                            <p class="font-medium">Legalize 4-unit buildings "as-of-right" in residential zones</p>
+                        </div>
+                        <div class="flex items-center p-4 bg-white rounded-lg navy-shadow">
+                            <div class="text-2xl font-bold mr-4" style="color: #1a365d;">2</div>
+                            <p class="font-medium">Streamline approval processes for missing middle housing</p>
+                        </div>
+                        <div class="flex items-center p-4 bg-white rounded-lg navy-shadow">
+                            <div class="text-2xl font-bold mr-4" style="color: #1a365d;">3</div>
+                            <p class="font-medium">Protect renters from displacement through "renoviction" rules</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="/solution" class="px-6 py-3 text-white font-medium rounded-lg navy-shadow" style="background-color: #1a365d;">Learn About the Solution</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section Preview - Changed to gray background -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6" style="color: #1a365d;">Help us solve Burlington's housing crisis</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-700">Change won't happen without community support. Send a message to city council that you support missing middle housing reform.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-lg navy-shadow">
+                    <div class="text-4xl mb-4">📧</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Email Your Councillor</h3>
+                    <p class="mb-4" style="color: #4b5563;">Send a pre-written email to your city councillor in under 60 seconds.</p>
+                    <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white navy-shadow" style="background-color: #1a365d;">Send Email</a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg navy-shadow">
+                    <div class="text-4xl mb-4">✏️</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Sign the Petition</h3>
+                    <p class="mb-4" style="color: #4b5563;">Add your name to show broad community support for housing reform.</p>
+                    <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white navy-shadow" style="background-color: #1a365d;">Sign Now</a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg navy-shadow">
+                    <div class="text-4xl mb-4">📣</div>
+                    <h3 class="text-xl font-semibold mb-2" style="color: #1a365d;">Spread the Word</h3>
+                    <p class="mb-4" style="color: #4b5563;">Share this website with your friends, family, and neighbors.</p>
+                    <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white navy-shadow" style="background-color: #1a365d;">Share</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold text-white">BuildBurlington</h3>
+                    <p class="text-gray-400">A campaign for housing solutions</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Data Sources</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Preview charts
+    document.addEventListener('DOMContentLoaded', function() {
+        // Price vs Income Preview Chart - Updated with same money axis
+        const priceIncomePreviewCtx = document.getElementById('preview-price-income-chart');
+        if (priceIncomePreviewCtx) {
+            // Convert income to thousands for consistent scale
+            const incomeData = [80, 79, 79.6, 77.9, 81.5, 80.8, 80.7, 83.4, 85.9, 84.8, 91.1, 92, 87.7, 89.3, 90];
+            const priceData = [385, 400, 415, 435, 460, 510, 580, 650, 720, 780, 850, 1050, 1150, 1100, 1050];
+            const years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+            
+            // Use a subset of years for better readability
+            const displayYears = ['2010', '2012', '2014', '2016', '2018', '2020', '2022', '2024'];
+            const displayIncome = incomeData.filter((_, index) => index % 2 === 0 || index === incomeData.length - 1);
+            const displayPrices = priceData.filter((_, index) => index % 2 === 0 || index === priceData.length - 1);
+            
+            new Chart(priceIncomePreviewCtx, {
+                type: 'line',
+                data: {
+                    labels: displayYears,
+                    datasets: [{
+                        label: 'Home Price ($ Thousands)',
+                        data: displayPrices,
+                        borderColor: 'rgb(220, 38, 38)', // Bright red
+                        backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        borderWidth: 2
+                    }, {
+                        label: 'Income ($ Thousands)',
+                        data: displayIncome,
+                        borderColor: 'rgb(34, 197, 94)', // Bright green
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { 
+                                            style: 'currency', 
+                                            currency: 'USD',
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 0
+                                        }).format(context.parsed.y * 1000);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Dollars ($ Thousands)',
+                                font: { weight: 'bold', color: '#1a365d' }
+                            },
+                            min: 0,
+                            max: 1200,
+                            grid: {
+                                drawOnChartArea: true,
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year',
+                                font: { weight: 'bold', color: '#1a365d' }
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Comparison Preview Chart
+        const comparisonPreviewCtx = document.getElementById('preview-comparison-chart');
+        if (comparisonPreviewCtx) {
+            new Chart(comparisonPreviewCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Burlington', 'Oakville', 'Milton', 'Hamilton', 'Toronto'],
+                    datasets: [{
+                        label: 'Price-to-Income Ratio',
+                        data: [12.32, 10.80, 9.05, 9.62, 12.35],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.9)',    // Red
+                            'rgba(249, 115, 22, 0.9)',   // Orange
+                            'rgba(234, 179, 8, 0.9)',    // Yellow
+                            'rgba(34, 197, 94, 0.9)',    // Green
+                            'rgba(59, 130, 246, 0.9)'    // Blue
+                        ],
+                        borderColor: [
+                            'rgb(239, 68, 68)',
+                            'rgb(249, 115, 22)',
+                            'rgb(234, 179, 8)',
+                            'rgb(34, 197, 94)',
+                            'rgb(59, 130, 246)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Price-to-Income Ratio Comparison',
+                            font: { size: 16, weight: 'bold', color: '#1a365d' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Ratio: ${context.raw.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Ratio (Higher is Worse)',
+                                font: { weight: 'bold', color: '#1a365d' }
+                            },
+                            ticks: {
+                                color: '#1a365d'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                color: '#1a365d'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

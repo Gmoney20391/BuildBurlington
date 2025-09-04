@@ -1,0 +1,689 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Action - Build Burlington</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-pattern {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        }
+        
+        .action-card {
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .impact-stat {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 16px;
+        }
+        
+        .floating-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        @media (max-width: 768px) {
+            .floating-nav {
+                background: white;
+            }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .action-step {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .action-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+        
+        .counter-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .social-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #4b5563;
+            transition: all 0.3s ease;
+        }
+        
+        .social-share:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-share.facebook:hover {
+            background: #3b5998;
+            color: white;
+        }
+        
+        .social-share.twitter:hover {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .social-share.email:hover {
+            background: #ea4335;
+            color: white;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #3b82f6 50%, transparent 100%);
+        }
+        
+        .stat-highlight {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Burlington - Fixed Navigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hamburger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #4b5563;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu-open {
+            max-height: 500px;
+        }
+        
+        /* Custom breakpoint to prevent hamburger and menu items from showing simultaneously */
+        @media (max-width: 950px) {
+            .nav-items {
+                display: none;
+            }
+            
+            .hamburger-button {
+                display: block;
+            }
+        }
+        
+        @media (min-width: 951px) {
+            .nav-items {
+                display: flex;
+            }
+            
+            .hamburger-button {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center py-2 text-blue-600">
+                        <span class="font-bold text-xl">BuildBurlington</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Items -->
+                <div class="nav-items items-center space-x-6">
+                    <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
+                    <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
+                    <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
+                    <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
+                    <a href="#" class="py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-300">Support the Policy</a>
+                </div>
+                
+                <!-- Hamburger Button -->
+                <div class="hamburger-button">
+                    <button id="hamburger-btn" class="focus:outline-none">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu bg-white">
+                <div class="px-2 pt-2 pb-4 space-y-1">
+                    <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
+                    <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
+                    <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
+                    <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
+                    <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
+                    <a href="#" class="block py-3 px-4 bg-blue-600 text-white text-center rounded-lg font-medium mt-2">Support the Policy</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <script>
+        // Hamburger menu functionality
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburgerBtn.classList.toggle('hamburger-active');
+            mobileMenu.classList.toggle('mobile-menu-open');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = mobileMenu.contains(e.target);
+            const isClickOnHamburger = hamburgerBtn.contains(e.target);
+            
+            if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
+                hamburgerBtn.classList.remove('hamburger-active');
+                mobileMenu.classList.remove('mobile-menu-open');
+            }
+        });
+        
+        // Close menu when a link is clicked
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('hamburger-active');
+                mobileMenu.classList.remove('mobile-menu-open');
+            });
+        });
+        
+        // Display current screen width and navigation mode
+        function updateScreenInfo() {
+            const width = window.innerWidth;
+            document.getElementById('screen-width').textContent = width;
+            
+            const mode = width > 950 ? 'Desktop' : 'Mobile';
+            document.getElementById('nav-mode').textContent = mode;
+        }
+        
+        window.addEventListener('resize', updateScreenInfo);
+        window.addEventListener('load', updateScreenInfo);
+    </script>
+</body>
+</html>
+    <!-- Hero Section - UPDATED WITH NEW STATS -->
+    <section class="hero-pattern pt-32 pb-24 text-white">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6">Burlington's Housing Crisis by the Numbers</h1>
+            <p class="text-xl opacity-90 mb-10 max-w-3xl mx-auto">The data reveals the urgent need for housing solutions in our community.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="stat-highlight">
+                    <div class="text-4xl font-bold mb-2">84%</div>
+                    <p class="text-sm opacity-90">Rent increase since 2010</p>
+                </div>
+                <div class="stat-highlight">
+                    <div class="text-4xl font-bold mb-2">#1</div>
+                    <p class="text-sm opacity-90">Lowest construction rate in Ontario</p>
+                </div>
+                <div class="stat-highlight">
+                    <div class="text-4xl font-bold mb-2">15x</div>
+                    <p class="text-sm opacity-90">Income needed for down payment</p>
+                </div>
+            </div>
+            
+            <div class="mt-12">
+                <a href="#sign" class="btn-primary inline-block text-lg px-8 py-4">Take Action Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Why Your Action Matters</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="impact-stat p-6 text-white text-center">
+                    <div class="text-4xl font-bold mb-2">72%</div>
+                    <p class="opacity-90">Of Burlington residents support missing middle housing policies</p>
+                </div>
+                <div class="impact-stat p-6 text-white text-center">
+                    <div class="text-4xl font-bold mb-2">5-1</div>
+                    <p class="opacity-90">City Council responds to constituent contacts at a 5:1 ratio</p>
+                </div>
+                <div class="impact-stat p-6 text-white text-center">
+                    <div class="text-4xl font-bold mb-2">23K</div>
+                    <p class="opacity-90">Potential new housing units with policy change</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ways to Take Action -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">How You Can Make a Difference</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Even small actions can create big change. Here's how you can help solve Burlington's housing crisis.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="action-card bg-white p-8">
+                    <div class="action-step mb-6">
+                        <div class="action-step-number">1</div>
+                        <h3 class="text-2xl font-semibold mb-3">Sign the Petition</h3>
+                        <p class="text-gray-600">Add your name to show support for missing middle housing policies in Burlington.</p>
+                    </div>
+                    <div class="progress-bar bg-gray-200 mb-4">
+                        <div class="progress-fill bg-green-500" style="width: 65%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500 mb-6">
+                        <span>1,923 signatures</span>
+                        <span>Goal: 3,000</span>
+                    </div>
+                    <a href="#sign" class="btn-primary inline-block w-full text-center">Sign Now</a>
+                </div>
+                
+                <div class="action-card bg-white p-8">
+                    <div class="action-step mb-6">
+                        <div class="action-step-number">2</div>
+                        <h3 class="text-2xl font-semibold mb-3">Contact City Council</h3>
+                        <p class="text-gray-600">Send a message to your representatives urging them to support housing reform.</p>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Use our template to make it quick and easy.</p>
+                    <a href="#contact" class="btn-primary inline-block w-full text-center">Contact Now</a>
+                </div>
+                
+                <div class="action-card bg-white p-8">
+                    <div class="action-step mb-6">
+                        <div class="action-step-number">3</div>
+                        <h3 class="text-2xl font-semibold mb-3">Share on Social Media</h3>
+                        <p class="text-gray-600">Spread the word to your friends and neighbors about the housing crisis solution.</p>
+                    </div>
+                    <div class="flex space-x-4 justify-center">
+                        <a href="#" class="social-share facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-share twitter">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-share email">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-5.727V12.91L12 16.636l-4.636-3.727V21H1.636A1.636 1.636 0 010 19.364V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.91 12 9.546l6.545-4.636 1.528-1.417C21.69 2.279 24 3.434 24 5.457z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="action-card bg-white p-8">
+                    <div class="action-step mb-6">
+                        <div class="action-step-number">4</div>
+                        <h3 class="text-2xl font-semibold mb-3">Attend a Council Meeting</h3>
+                        <p class="text-gray-600">Show your support in person at the next City Council meeting.</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <p class="text-blue-800 text-sm"><strong>Next meeting:</strong> October 15, 2024 at 6:30 PM</p>
+                        <p class="text-blue-800 text-sm"><strong>Location:</strong> Burlington City Hall</p>
+                    </div>
+                    <a href="#" class="btn-primary inline-block w-full text-center">Add to Calendar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Petition Section -->
+    <section id="sign" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Sign the Petition</h2>
+                <p class="text-xl text-gray-600">Join your neighbors in calling for common-sense housing solutions.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-2xl shadow-sm">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4">We call on Burlington City Council to:</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Allow duplexes, triplexes, and fourplexes in residential neighborhoods</li>
+                        <li>Streamline approval processes for missing middle housing</li>
+                        <li>Update zoning bylaws to support diverse housing options</li>
+                        <li>Prioritize affordable housing initiatives in the city plan</li>
+                    </ul>
+                </div>
+                
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">First Name</label>
+                            <input type="text" class="form-input w-full" placeholder="Your first name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Last Name</label>
+                            <input type="text" class="form-input w-full" placeholder="Your last name">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Email Address</label>
+                        <input type="email" class="form-input w-full" placeholder="Your email address">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Postal Code</label>
+                        <input type="text" class="form-input w-full" placeholder="Your postal code">
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input type="checkbox" id="newsletter" class="mt-1 mr-3">
+                        <label for="newsletter" class="text-gray-600 text-sm">Yes, I want to receive updates about the housing campaign and other ways to get involved.</label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full text-lg py-3">Add My Signature</button>
+                    
+                    <p class="text-gray-500 text-sm text-center">By signing, you agree to receive emails from Build Burlington about this campaign and others. You can unsubscribe at any time.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Council Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Contact City Council</h2>
+                <p class="text-xl text-gray-600">Personal messages to council members have the most impact.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-sm">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4">Message Template</h3>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <p class="text-blue-800 mb-4">Dear Mayor [Name] and City Council members,</p>
+                        <p class="text-blue-800 mb-4">I'm writing to express my strong support for allowing missing middle housing options in Burlington's residential neighborhoods.</p>
+                        <p class="text-blue-800 mb-4">As a resident, I've seen firsthand how our housing crisis is affecting our community. Allowing duplexes, triplexes, and fourplexes in single-family neighborhoods would create more affordable housing options while preserving neighborhood character.</p>
+                        <p class="text-blue-800 mb-4">I urge you to support zoning reforms that would make this possible. Thank you for considering my perspective on this important issue.</p>
+                        <p class="text-blue-800">Sincerely,<br>[Your Name]<br>Burlington Resident</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Send Your Message</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="mayor" class="mr-2" checked>
+                            <label for="mayor" class="text-gray-700">Mayor Marianne Meed Ward</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council1" class="mr-2" checked>
+                            <label for="council1" class="text-gray-700">Councillor Kelvin Galbraith</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council2" class="mr-2" checked>
+                            <label for="council2" class="text-gray-700">Councillor Lisa Kearns</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council3" class="mr-2" checked>
+                            <label for="council3" class="text-gray-700">Councillor Rory Nisan</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council4" class="mr-2" checked>
+                            <label for="council4" class="text-gray-700">Councillor Shawna Stolte</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council5" class="mr-2" checked>
+                            <label for="council5" class="text-gray-700">Councillor Angelo Bentivegna</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="council6" class="mr-2" checked>
+                            <label for="council6" class="text-gray-700">Councillor Paul Sharman</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">Your Name</label>
+                            <input type="text" class="form-input w-full" placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Your Email</label>
+                            <input type="email" class="form-input w-full" placeholder="Your email address">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Your Address</label>
+                        <input type="text" class="form-input w-full" placeholder="Your street address">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Personalize Your Message (optional)</label>
+                        <textarea class="form-input w-full h-32" placeholder="Add a personal story or reason for supporting this policy"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full text-lg py-3">Send Message to Council</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Common questions about taking action for housing solutions.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <h3 class="text-xl font-semibold mb-3">Will my personal information be shared?</h3>
+                    <p class="text-gray-600">We will never share your personal information without your permission. When you contact city council, only your name and message will be sent. We will not sell or distribute your contact information to third parties.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <h3 class="text-xl font-semibold mb-3">How often will I receive emails?</h3>
+                    <p class="text-gray-600">We typically send 1-2 emails per month with updates on the campaign and opportunities to take action. You can unsubscribe at any time using the link in any email.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <h3 class="text-xl font-semibold mb-3">What happens after I sign the petition?</h3>
+                    <p class="text-gray-600">We will present the petition to Burlington City Council at an upcoming meeting. We'll also keep you updated on the progress of the campaign and let you know about other ways to get involved.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <h3 class="text-xl font-semibold mb-3">Can I help in other ways?</h3>
+                    <p class="text-gray-600">Absolutely! You can help by talking to your neighbors about the issue, sharing information on social media, attending city council meetings, or volunteering with our organization. <a href="#" class="text-blue-600 hover:underline">Contact us</a> to learn more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Together, We Can Solve Burlington's Housing Crisis</h2>
+            <p class="text-xl mb-10">Your voice matters. Join your neighbors in calling for common-sense housing solutions.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#sign" class="px-8 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-md hover:bg-gray-100">Sign the Petition</a>
+                <a href="#contact" class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-700">Contact Council</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold">BuildBurlington</h3>
+                    <p class="text-gray-400">A campaign for housing solutions</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+                    <a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animated counters
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16); // 16ms per frame ≈ 60fps
+            
+            const updateCounter = () => {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            };
+            
+            updateCounter();
+        }
+        
+        // Initialize counters when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the counters in the hero section
+            const statElements = document.querySelectorAll('.stat-highlight .text-4xl');
+            animateCounter(statElements[0], 84, 2000);
+            animateCounter(statElements[1], 1, 1000);
+            animateCounter(statElements[2], 15, 2000);
+            
+            // Form submission handlers
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for taking action! In a real implementation, this would submit your information.');
+                });
+            });
+            
+            // Social share buttons
+            const shareButtons = document.querySelectorAll('.social-share');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('In a real implementation, this would share content on social media.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

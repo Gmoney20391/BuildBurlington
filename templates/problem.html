@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Build Burlington — The Problem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .hero-pattern {
+      background: radial-gradient(1200px 600px at 10% -10%, #dbeafe 0%, rgba(219,234,254,0) 60%),
+                  radial-gradient(1200px 600px at 110% 10%, #fef3c7 0%, rgba(254,243,199,0) 60%),
+                  #0f172a;
+    }
+    .glass {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: saturate(140%) blur(10px);
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06);
+    }
+    .card:hover {
+      box-shadow: 0 10px 25px rgba(16,24,40,.08), 0 4px 10px rgba(16,24,40,.06);
+      transform: translateY(-1px);
+      transition: all .25s ease;
+    }
+    .hamburger-line {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px auto;
+      background-color: #4b5563;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger-active .hamburger-line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger-active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger-active .hamburger-line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .mobile-menu-open {
+      max-height: 500px;
+    }
+    
+    /* Custom breakpoint to prevent hamburger and menu items from showing simultaneously */
+    @media (max-width: 950px) {
+      .nav-items {
+        display: none;
+      }
+      
+      .hamburger-button {
+        display: block;
+      }
+    }
+    
+    @media (min-width: 951px) {
+      .nav-items {
+        display: flex;
+      }
+      
+      .hamburger-button {
+        display: none;
+      }
+      
+      .mobile-menu {
+        display: none;
+      }
+    }
+    
+    .explanation-box {
+      background-color: #1a365d;
+      color: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center">
+          <a href="/" class="flex items-center py-2 text-blue-600">
+            <span class="font-bold text-xl" style="color: #1a365d;">BuildBurlington</span>
+          </a>
+        </div>
+        
+        <!-- Desktop Navigation Items -->
+        <div class="nav-items items-center space-x-6">
+          <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
+          <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
+          <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
+          <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
+          <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
+          <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300" style="background-color: #1a365d;">Support the Policy</a>
+        </div>
+        
+        <!-- Hamburger Button -->
+        <div class="hamburger-button">
+          <button id="hamburger-btn" class="focus:outline-none">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="mobile-menu bg-white">
+        <div class="px-2 pt-2 pb-4 space-y-1">
+          <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
+          <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
+          <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
+          <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
+          <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
+          <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2" style="background-color: #1a365d;">Support the Policy</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // Hamburger menu functionality
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hamburgerBtn.classList.toggle('hamburger-active');
+      mobileMenu.classList.toggle('mobile-menu-open');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const isClickInsideMenu = mobileMenu.contains(e.target);
+      const isClickOnHamburger = hamburgerBtn.contains(e.target);
+      
+      if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
+        hamburgerBtn.classList.remove('hamburger-active');
+        mobileMenu.classList.remove('mobile-menu-open');
+      }
+    });
+    
+    // Close menu when a link is clicked
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('hamburger-active');
+        mobileMenu.classList.remove('mobile-menu-open');
+      });
+    });
+  </script>
+
+  <!-- Hero -->
+  <header class="hero-pattern text-white">
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight">The Housing Crisis in Numbers</h1>
+          <p class="mt-4 text-lg text-slate-200 max-w-xl">
+            Burlington faces a severe affordability crunch. Explore how prices, incomes, rents, vacancy, and population have shifted over time.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="/solution" class="px-5 py-3 rounded-lg bg-white text-blue-700 font-semibold hover:bg-slate-100">Explore the Solution</a>
+            <a href="/action" class="px-5 py-3 rounded-lg border border-white/70 text-white hover:bg-white/10">Take Action</a>
+          </div>
+        </div>
+        <div class="glass card p-5">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-xs text-slate-500">Price-to-Income</div>
+              <div class="text-2xl font-bold text-red-600">12.3×</div>
+              <div class="text-[11px] text-slate-500 mt-1">2023, CMHC + StatCan</div>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-xs text-slate-500">Vacancy</div>
+              <div class="text-2xl font-bold text-orange-500">1.8%</div>
+              <div class="text-[11px] text-slate-500 mt-1">2024 Oct, CMHC</div>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-xs text-slate-500">Median 2BR Rent</div>
+              <div id="hero-rent" class="text-2xl font-bold text-emerald-700">—</div>
+              <div class="text-[11px] text-slate-500 mt-1">Latest, CMHC</div>
+            </div>
+          </div>
+          <p class="text-[12px] text-slate-600 mt-3">
+            Sources: CMHC, Statistics Canada, Teranet/National Bank, City of Burlington.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="max-w-6xl mx-auto px-4 py-12 space-y-12">
+
+      <!-- Chart 1: Home Prices vs Income (to 2023 only) -->
+      <section class="card bg-white p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-semibold">Home Prices vs. Income (2010–2023)</h2>
+            <p class="text-slate-600 mt-1">Prices have outrun incomes, widening the affordability gap.</p>
+          </div>
+          <div id="chart-toggle-buttons" class="flex gap-2">
+            <button class="px-3 py-1 rounded-md bg-blue-100 text-blue-700 text-sm" onclick="updateChartType('both')">Both</button>
+            <button class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 text-sm" onclick="updateChartType('price')">Home Prices</button>
+            <button class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 text-sm" onclick="updateChartType('income')">Income</button>
+          </div>
+        </div>
+        <div class="h-96 mt-4">
+          <canvas id="price-income-chart"></canvas>
+        </div>
+        <p class="text-sm text-slate-500 mt-3">Source: Teranet-National Bank HPI, Statistics Canada (clipped to 2023).</p>
+      </section>
+
+      <!-- Explanation Section for Price vs Income Chart -->
+      <div class="explanation-box">
+        <h3 class="text-xl font-semibold mb-3">How Zoning Impacts Affordability</h3>
+        <p class="text-sm">Burlington's restrictive zoning laws limit housing supply by prohibiting medium-density housing types like duplexes, triplexes, and townhomes in most residential areas. This artificial scarcity drives up prices as demand far outstrips the limited supply of single-family homes. When housing construction can't keep pace with population growth, prices inevitably rise faster than incomes.</p>
+      </div>
+
+      <!-- Timeline Slider Dashboard -->
+      <section class="card bg-white p-6">
+        <h2 class="text-2xl font-semibold">How things changed over time</h2>
+        <p class="text-slate-600 mt-1">Use the timeline to see vacancy, rents, and population/dwellings by year.</p>
+
+        <!-- Slider -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between text-sm text-slate-600">
+            <span id="timeline-min">2010</span>
+            <span id="timeline-year" class="font-semibold text-slate-900">—</span>
+            <span id="timeline-max">2024</span>
+          </div>
+          <input id="timeline-slider" type="range" min="2010" max="2024" step="1" value="2010"
+                class="w-full mt-2 accent-blue-600"/>
+        </div>
+
+        <!-- KPI Cards - Centered -->
+        <div class="flex justify-center mt-6">
+          <div class="grid md:grid-cols-3 gap-4 max-w-3xl">
+            <div class="bg-slate-50 rounded-xl p-4">
+              <div class="text-xs text-slate-500">Vacancy Rate</div>
+              <div id="kpi-vacancy" class="text-2xl font-bold">—</div>
+              <div class="text-[11px] text-slate-500 mt-1">CMHC Rental Market Survey</div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-4">
+              <div class="text-xs text-slate-500">Population</div>
+              <div id="kpi-population" class="text-2xl font-bold">—</div>
+              <div class="text-[11px] text-slate-500 mt-1">StatCan / City Estimates</div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-4">
+              <div class="text-xs text-slate-500">Housing Gap</div>
+              <div id="kpi-gap" class="text-2xl font-bold">—</div>
+              <div class="text-[11px] text-slate-500 mt-1">Dwellings Needed − Current</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small trend panels -->
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="bg-white border border-slate-200 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-medium">Average Housing Price Over Time</h3>
+              <span class="text-xs text-slate-500">2010–2024</span>
+            </div>
+            <div class="h-64 mt-2"><canvas id="timeline-vr-chart"></canvas></div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-medium">Population, Dwellings & Gap</h3>
+              <span class="text-xs text-slate-500">2010–2035</span>
+            </div>
+            <div class="h-64 mt-2"><canvas id="timeline-pop-chart"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- City Comparison with Explanation on the Right -->
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-2/3">
+          <section class="card bg-white p-6 h-full">
+            <h2 class="text-2xl font-semibold">How Burlington compares to other cities</h2>
+            <p class="text-slate-600 mt-1">Burlington Underperforms Compared To Most Cities In The GTA. Select A Metric To Compare. </p>
+
+            <div class="mt-4">
+              <label for="metric-select" class="block text-sm font-medium text-slate-700 mb-2">Select metric:</label>
+              <select id="metric-select" class="w-full md:w-80 px-4 py-2 border border-slate-300 rounded-lg">
+                <option value="Price_to_Income_Ratio">Price-to-Income Ratio</option>
+                <option value="Avg_Rent_2Bedroom_2024">Average Rent (2 Bedroom)</option>
+                <option value="Housing_Starts_Per_1000_People">Housing Starts per 1000 People</option>
+                <option value="Vacancy_Rate_2024_Pct">Vacancy Rate</option>
+              </select>
+            </div>
+
+            <div class="h-96 mt-4">
+              <canvas id="comparison-chart"></canvas>
+            </div>
+            <p class="text-sm text-slate-500 mt-3">Source: BurlingtonComparison.csv (your file, unchanged).</p>
+          </section>
+        </div>
+        <div class="w-full lg:w-1/3 flex items-center">
+          <!-- Explanation Section for Comparison Chart (on the right) -->
+          <div class="explanation-box h-full">
+            <h3 class="text-xl font-semibold mb-3">Why Burlington Lags Behind</h3>
+            <p class="text-sm">Burlington's restrictive zoning policies have created a severe housing supply crisis that explains why our city consistently ranks among the worst in housing metrics compared to neighboring municipalities. While cities like Oakville, Milton, and Hamilton have modernized their zoning bylaws to allow for more diverse housing types like townhomes, duplexes, and low-rise apartments, Burlington maintains predominantly single-family detached zoning across most residential areas. This artificial constraint on housing supply directly contributes to our sky-high price-to-income ratio and critically low vacancy rates. The data clearly shows that municipalities with more flexible zoning policies have been able to approve and construct housing at much higher rates per capita. Burlington's outdated zoning not only limits new construction but also prevents the natural evolution of neighborhoods to include more affordable options for young families, seniors looking to downsize, and essential workers. Without significant zoning reform to allow for gentle density and missing middle housing types, Burlington will continue to fall further behind our regional neighbors in addressing the housing affordability crisis.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rental Trends with Explanation on the Left -->
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-1/3 flex items-center">
+          <!-- Explanation Section for Rental Trends (on the left) -->
+          <div class="explanation-box h-full">
+            <h3 class="text-xl font-semibold mb-3">The Rental Crunch</h3>
+            <p class="text-sm">Burlington's zoning restrictions have created a perfect storm in our rental market, where demand drastically outstrips supply. With over 80% of residential land zoned exclusively for single-family homes, there are extremely limited opportunities to build new rental apartments, townhomes, or secondary suites. This artificial scarcity has driven vacancy rates to crisis levels below 2%, far under the healthy market threshold of 3-4%. Landlords face little competition, allowing them to increase rents at rates that far exceed income growth. The problem is particularly acute for affordable rental units - without zoning that allows for smaller units, garden suites, or converted dwellings, low and middle-income renters are being priced out of our community entirely. This rental crunch impacts our local economy, making it difficult for businesses to attract and retain employees who cannot find affordable housing. Essential workers like teachers, nurses, and service industry staff face increasingly long commutes as they're forced to seek housing in more affordable communities. Without zoning reforms that specifically allow for more rental housing options, Burlington's rental market will continue to favor landlords at the expense of tenants</p>
+          </div>
+        </div>
+        <div class="w-full lg:w-2/3">
+          <section class="card bg-white p-6 h-full">
+            <h2 class="text-2xl font-semibold">Rental Trends</h2>
+            <p class="text-slate-600 mt-1">Average rents have climbed while vacancy remains tight.</p>
+            <div class="grid md:grid-cols-2 gap-6 mt-4">
+              <div>
+                <h3 class="font-medium mb-2">Average Rent (2 Bedroom)</h3>
+                <div class="h-64"><canvas id="rent-chart"></canvas></div>
+              </div>
+              <div>
+                <h3 class="font-medium mb-2">Vacancy Rate (Total)</h3>
+                <div class="h-64"><canvas id="vacancy-chart"></canvas></div>
+              </div>
+            </div>
+            <p class="text-sm text-slate-500 mt-3">Source: CMHC Rental Market Survey (2010–2024).</p>
+          </section>
+        </div>
+      </div>
+
+      <!-- Call to Action - Updated to navy with yellow buttons -->
+      <section class="rounded-2xl p-8 card" style="background-color: #1a365d;">
+        <h2 class="text-3xl font-bold text-white">This crisis demands action</h2>
+        <p class="text-lg mt-2 max-w-3xl text-slate-200">The numbers are clear: we need more homes, faster. Explore the solutions and help move Burlington forward. Navigate BuildBurlington to see how the missing middle will solve the housing crisis in Burlington</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/solution" class="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold hover:bg-yellow-500">Explore the Solution</a>
+          <a href="/action" class="px-6 py-3 border border-white text-white rounded-lg font-semibold hover:bg-yellow-400 hover:text-gray-900">Take Action Now</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="text-xl font-bold text-white">BuildBurlington</div>
+        <div class="text-slate-400 text-sm">A campaign for housing solutions</div>
+      </div>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Contact</a>
+        <a href="/sources" class="hover:text-white">Data Sources</a>
+      </div>
+    </div>
+    <div class="border-t border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+        © 2024 BuildBurlington. Data: CMHC, Statistics Canada, City of Burlington.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // ------- Globals
+  let priceIncomeChart = null;
+  let comparisonChart = null;
+  let rentChart = null;
+  let vacancyChart = null;
+  let timelineVRChart = null;
+  let timelinePopChart = null;
+
+  // Fetch helper
+  async function fetchData(url) {
+    try {
+      const res = await fetch(url);
+      return await res.json();
+    } catch (e) {
+      console.error('Fetch error', url, e);
+      return [];
+    }
+  }
+
+  // Utilities
+  const parseNum = (v) => (typeof v === 'number' ? v : parseFloat(String(v).replace(/[^0-9.\-]/g, '')));
+  const moneyFmt = (n) => n != null && !isNaN(n) ? '$' + Math.round(n).toLocaleString() : '—';
+  const pctFmt   = (n) => n != null && !isNaN(n) ? (Math.round(n * 10) / 10) + '%' : '—';
+
+  // Toggle price/income chart datasets
+  function updateChartType(type) {
+    if (!priceIncomeChart) return;
+
+    // Update button styles
+    document.querySelectorAll('#chart-toggle-buttons button').forEach(btn => {
+      btn.classList.remove('bg-blue-100','text-blue-700');
+      btn.classList.add('bg-gray-100','text-gray-700');
+    });
+    const active = document.querySelector(`#chart-toggle-buttons button[onclick="updateChartType('${type}')"]`);
+    if (active) active.classList.add('bg-blue-100','text-blue-700');
+
+    priceIncomeChart.data.datasets[0].hidden = type === 'income';
+    priceIncomeChart.data.datasets[1].hidden = type === 'price';
+    priceIncomeChart.update();
+  }
+
+  // Process comparison data
+  const processComparisonData = (data, metric) => {
+    return data
+      .filter(item => item.City && item[metric] !== undefined && item[metric] !== null && item[metric] !== '')
+      .map(item => {
+        let value = item[metric];
+        if (typeof value === 'string') value = parseFloat(value.replace(/[^0-9.\-]/g, ''));
+        return { city: item.City, value };
+      })
+      .filter(item => !isNaN(item.value));
+  };
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // --- Fetch all datasets
+    const [
+      housingPrices, incomeData, comparisonData,
+      rentData, vacancyData, populationData
+    ] = await Promise.all([
+      fetchData('/api/housing-prices'),
+      fetchData('/api/income-data'),
+      fetchData('/api/comparison-data'),
+      fetchData('/api/rent-data'),
+      fetchData('/api/vacancy-data'),
+      fetchData('/api/population-data')
+    ]);
+
+    console.log('Housing prices data:', housingPrices); // Debug log
+    console.log('Income data:', incomeData); // Debug log
+
+    // --- Hero rent (latest)
+    if (rentData?.length) {
+      const latestRent = [...rentData].sort((a,b)=>parseInt(a.Year)-parseInt(b.Year)).slice(-1)[0];
+      document.getElementById('hero-rent').textContent = moneyFmt(parseNum(latestRent?.Rent_2Bedroom));
+    }
+
+    // --- Price vs Income Chart (clipped to 2023) - Updated to use same dollar comparison
+    const processedHousing = housingPrices
+      .filter(d => d.Year && d.MedianPrice)
+      .map(d => ({ year: parseInt(d.Year), price: parseNum(d.MedianPrice) }))
+      .filter(d => d.year <= 2023)
+      .sort((a,b) => a.year - b.year);
+
+    const processedIncome = incomeData
+      .filter(d => d.Year && d.MedianIncome)
+      .map(d => ({ year: parseInt(d.Year), income: parseNum(d.MedianIncome) }))
+      .filter(d => d.year <= 2023)
+      .sort((a,b) => a.year - b.year);
+
+    const years = processedHousing.map(d=>d.year);
+    const prices = processedHousing.map(d=>d.price);
+    const incomes = processedIncome.map(d=>d.income);
+
+    console.log('Processed housing:', processedHousing); // Debug log
+    console.log('Processed income:', processedIncome); // Debug log
+
+    const priceIncomeCtx = document.getElementById('price-income-chart');
+    if (priceIncomeCtx && years.length && prices.length && incomes.length) {
+      priceIncomeChart = new Chart(priceIncomeCtx, {
+        type: 'line',
+        data: {
+          labels: years,
+          datasets: [
+            {
+              label: 'Median Home Price ($)',
+              data: prices,
+              borderColor: 'rgb(239, 68, 68)',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Median Income ($)',
+              data: incomes,
+              borderColor: 'rgb(59, 130, 246)',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            y: { 
+              type: 'linear', 
+              position: 'left', 
+              title: { display: true, text: 'Dollars ($)' },
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                }
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    label += new Intl.NumberFormat('en-US', { 
+                      style: 'currency', 
+                      currency: 'USD',
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0
+                    }).format(context.parsed.y);
+                  }
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+      updateChartType('both');
+    } else {
+      console.error('Could not create price-income chart. Missing data.');
+    }
+
+    // --- Comparison Chart
+    const comparisonCtx = document.getElementById('comparison-chart');
+    if (comparisonCtx && comparisonData?.length) {
+      const metricSelect = document.getElementById('metric-select');
+      const initialData = processComparisonData(comparisonData, 'Price_to_Income_Ratio');
+
+      comparisonChart = new Chart(comparisonCtx, {
+        type: 'bar',
+        data: {
+          labels: initialData.map(i=>i.city),
+          datasets: [{
+            label: 'Price-to-Income Ratio',
+            data: initialData.map(i=>i.value),
+            backgroundColor: initialData.map(i => i.city==='Burlington'?'rgba(239,68,68,0.9)':'rgba(59,130,246,0.7)'),
+            borderColor: initialData.map(i => i.city==='Burlington'?'rgb(239,68,68)':'rgb(59,130,246)'),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{ title:{ display:true, text:'Price-to-Income Ratio Comparison', font:{size:16} }, legend:{display:false} },
+          scales:{ y:{beginAtZero:true,title:{display:true,text:'Ratio (Higher is Worse)'}}, x:{ticks:{maxRotation:45,minRotation:45}} }
+        }
+      });
+
+      metricSelect.addEventListener('change', function(){
+        const m = this.value;
+        const newData = processComparisonData(comparisonData, m);
+        comparisonChart.data.labels = newData.map(i=>i.city);
+        comparisonChart.data.datasets[0].data = newData.map(i=>i.value);
+        comparisonChart.data.datasets[0].label = this.options[this.selectedIndex].text;
+        comparisonChart.data.datasets[0].backgroundColor = newData.map(i => i.city==='Burlington'?'rgba(239,68,68,0.9)':'rgba(59,130,246,0.7)');
+        comparisonChart.data.datasets[0].borderColor = newData.map(i => i.city==='Burlington'?'rgb(239,68,68)':'rgb(59,130,246)');
+        const yTitle = m.includes('Ratio')?'Ratio (Higher is Worse)':m.includes('Rent')?'Monthly Rent ($)':m.includes('Vacancy')?'Vacancy Rate (%)':m.includes('Starts')?'Units per 1000 People':'Value';
+        comparisonChart.options.plugins.title.text = `${this.options[this.selectedIndex].text} Comparison`;
+        comparisonChart.options.scales.y.title.text = yTitle;
+        comparisonChart.update();
+      });
+    }
+
+    // --- Rental Trends Charts
+    const rentSeries = rentData.filter(d=>d.Year && d.Rent_2Bedroom!=null).map(d=>({year:parseInt(d.Year), rent:parseNum(d.Rent_2Bedroom)})).sort((a,b)=>a.year-b.year);
+    const vacancySeries = vacancyData.filter(d=>d.Year && d.Vacancy_Rate!=null).map(d=>({year:parseInt(d.Year), vacancy:parseNum(d.Vacancy_Rate)})).sort((a,b)=>a.year-b.year);
+
+    if (document.getElementById('rent-chart')) {
+      rentChart = new Chart(document.getElementById('rent-chart'), {
+        type: 'line',
+        data: { labels: rentSeries.map(d=>d.year), datasets:[{label:'Average 2-Bedroom Rent ($)',data:rentSeries.map(d=>d.rent),borderColor:'rgb(234,88,12)',backgroundColor:'rgba(234,88,12,0.12)',tension:0.3,fill:true}] },
+        options:{ responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:false,title:{display:true,text:'Monthly Rent ($)'}}} }
+      });
+    }
+
+    if (document.getElementById('vacancy-chart')) {
+      vacancyChart = new Chart(document.getElementById('vacancy-chart'), {
+        type: 'line',
+        data: { labels: vacancySeries.map(d=>d.year), datasets:[{label:'Rental Vacancy Rate (%)',data:vacancySeries.map(d=>d.vacancy),borderColor:'rgb(139,92,246)',backgroundColor:'rgba(139,92,246,0.12)',tension:0.3,fill:true}] },
+        options:{ responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true,title:{display:true,text:'Vacancy Rate (%)'}}} }
+      });
+    }
+
+    // --- Timeline Slider
+    const slider = document.getElementById('timeline-slider');
+    const yearLabel = document.getElementById('timeline-year');
+    const minLabel = document.getElementById('timeline-min');
+    const maxLabel = document.getElementById('timeline-max');
+
+    // Add housing price data to the processing
+    const housingPriceSeries = housingPrices
+      .filter(d => d.Year && d.MedianPrice)
+      .map(d => ({ year: parseInt(d.Year), price: parseNum(d.MedianPrice) }))
+      .sort((a, b) => a.year - b.year);
+
+    const minYear = Math.min(
+      housingPriceSeries[0]?.year ?? 2010, 
+      parseInt(populationData[0]?.Year ?? 2010)
+    );
+    const maxYear = Math.min(
+      Math.max(
+        housingPriceSeries.at(-1)?.year ?? 2024, 
+        parseInt(populationData.at(-1)?.Year ?? 2035)
+      ),
+      new Date().getFullYear() // Limit to current year
+    );
+
+    slider.min = String(minYear);
+    slider.max = String(maxYear);
+    slider.value = String(Math.min(2024, maxYear));
+    minLabel.textContent = slider.min;
+    maxLabel.textContent = slider.max;
+
+    const popMap = new Map(populationData.map(d=>[parseInt(d.Year),{
+      pop: parseNum(d.Population),
+      dwell: parseNum(d.CurrentDwellings),
+      need: parseNum(d.DwellingsNeeded),
+      gap: parseNum(d.HousingGap)
+    }]));
+    
+    // Create a map for housing prices
+    const housingPriceMap = new Map(housingPriceSeries.map(d => [d.year, d.price]));
+
+    // Timeline small charts - show housing prices
+    const tlVRctx = document.getElementById('timeline-vr-chart');
+    if (tlVRctx) {
+      const labels = [...new Set([...housingPriceSeries.map(d => d.year)])].sort((a, b) => a - b);
+      timelineVRChart = new Chart(tlVRctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { 
+              label: 'Median Home Price ($)', 
+              data: labels.map(y => housingPriceMap.get(y) ?? null), 
+              borderColor: 'rgb(239, 68, 68)', 
+              backgroundColor: 'rgba(239, 68, 68, 0.12)', 
+              tension: 0.3, 
+              fill: true 
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            y: {
+              position: 'left',
+              title: { display: true, text: 'Price ($)' },
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                }
+              }
+            }
+          },
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    }
+
+    const tlPOPctx = document.getElementById('timeline-pop-chart');
+    if (tlPOPctx) {
+      const labels = populationData.map(d => parseInt(d.Year)).sort((a, b) => a - b);
+      timelinePopChart = new Chart(tlPOPctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { 
+              label: 'Housing Gap', 
+              data: labels.map(y => popMap.get(y)?.gap ?? null), 
+              borderColor: 'rgb(239, 68, 68)', 
+              backgroundColor: 'rgba(239, 68, 68, 0.12)', 
+              tension: 0.3, 
+              fill: true 
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { position: 'bottom' } },
+          scales: {
+            y: {
+              title: { display: true, text: 'Housing Gap (Units)' }
+            }
+          }
+        }
+      });
+    }
+
+    // KPI bindings - remove rent KPI
+    const kpiVac = document.getElementById('kpi-vacancy');
+    const kpiPop = document.getElementById('kpi-population');
+    const kpiGap = document.getElementById('kpi-gap');
+
+    function updateKPI(year) {
+      yearLabel.textContent = year;
+      const p = popMap.get(year);
+      kpiPop.textContent  = p?.pop ? p.pop.toLocaleString() : '—';
+      kpiGap.textContent  = p?.gap != null && !isNaN(p.gap) ? p.gap.toLocaleString() : '—';
+      
+      // Remove vacancy if it doesn't exist for all years
+      const v = vacancyData.find(d => parseInt(d.Year) === year)?.Vacancy_Rate;
+      kpiVac.textContent = pctFmt(v);
+    }
+
+    slider.addEventListener('input', e => updateKPI(parseInt(e.target.value)));
+    updateKPI(parseInt(slider.value));
+  });
+</script>
+</body>
+</html>
