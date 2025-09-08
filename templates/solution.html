@@ -6,43 +6,49 @@
     <title>Missing Middle Housing Solution - Build Burlington</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#dbeafe',
+                            100: '#bfdbfe',
+                            200: '#93c5fd',
+                            300: '#60a5fa',
+                            400: '#3b82f6',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                            800: '#1e3a8a',
+                            900: '#1a365d',
+                        }
+                    },
+                    boxShadow: {
+                        'navy': '0 4px 6px -1px rgba(26, 54, 93, 0.1), 0 2px 4px -1px rgba(26, 54, 93, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        /* ===== BASE STYLES ===== */
         body {
             font-family: 'Inter', sans-serif;
         }
         
-        /* ===== NAVIGATION STYLES ===== */
-        .hamburger-button {
-            display: none;
-        }
-        
         .hamburger-line {
             display: block;
-            width: 24px;
-            height: 2px;
-            background-color: #374151;
-            margin: 6px 0;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #4b5563;
             transition: all 0.3s ease;
         }
         
-        #mobile-menu {
-            display: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        
-        #mobile-menu.mobile-menu-open {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         .hamburger-active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+            transform: translateY(8px) rotate(45deg);
         }
         
         .hamburger-active .hamburger-line:nth-child(2) {
@@ -50,11 +56,20 @@
         }
         
         .hamburger-active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
+            transform: translateY(-8px) rotate(-45deg);
         }
         
-        /* Show hamburger on medium and small screens */
-        @media (max-width: 1023px) {
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu-open {
+            max-height: 500px;
+        }
+        
+        @media (max-width: 950px) {
             .nav-items {
                 display: none;
             }
@@ -64,57 +79,20 @@
             }
         }
         
-        /* ===== COMPONENT STYLES ===== */
-        .hero-pattern {
-            background-color: #1a365d;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233366cc' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        @media (min-width: 951px) {
+            .nav-items {
+                display: flex;
+            }
+            
+            .hamburger-button {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: none;
+            }
         }
-        
-        .policy-card {
-            transition: all 0.3s ease;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-        
-        .policy-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .stat-highlight {
-            background: linear-gradient(135deg, #1a365d 0%, #2d4a8a 100%);
-            border-radius: 16px;
-        }
-        
-        .impact-visual {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-        }
-        
-        .impact-visual::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(26, 54, 93, 0.9) 0%, rgba(45, 74, 138, 0.9) 100%);
-            z-index: 1;
-        }
-        
-        .slider-thumb::-webkit-slider-thumb {
-            appearance: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #1a365d;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border: 2px solid white;
-        }
-        
-        /* UPDATED NEIGHBORHOOD VISUALIZATION */
+
         .neighborhood-vis {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -156,29 +134,6 @@
             grid-column: span 2;
         }
         
-        .floating-nav {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .section-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #1a365d 50%, transparent 100%);
-        }
-        
-        .city-comparison-bar {
-            transition: all 0.3s ease;
-        }
-        
-        .city-comparison-bar:hover {
-            transform: scale(1.02);
-        }
-        
-        .burlington-highlight {
-            box-shadow: 0 0 0 3px #f59e0b;
-        }
-        
-        /* Progress bar container with overflow visible */
         .progress-container {
             position: relative;
             overflow: visible;
@@ -197,7 +152,10 @@
             max-width: 100%;
         }
         
-        /* Tooltip for progress bars that exceed 100% */
+        .progress-bar.extended {
+            background-color: #ef4444;
+        }
+        
         .progress-tooltip {
             position: absolute;
             top: -2rem;
@@ -224,65 +182,41 @@
             border-color: #1f2937 transparent transparent;
         }
         
-        /* Extended progress bar for values over 100% */
-        .progress-bar.extended {
-            background-color: #ef4444; /* Red color for over-achievement */
-        }
-        
-        /* Navy styling for headers */
-        .navy-header {
-            color: #1a365d;
-        }
-        
-        /* Lighter blue sections */
-        .light-blue-section {
-            background-color: #dbeafe;
-        }
-        
-        /* Different style text box with navy */
-        .navy-text-box {
-            background: linear-gradient(135deg, #1a365d 0%, #2d4a8a 100%);
-            color: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* ===== RESPONSIVE STYLES ===== */
-        @media (max-width: 768px) {
-            .floating-nav {
-                background: white;
-            }
-            
-            .neighborhood-vis {
-                height: 250px;
-            }
+        .slider-thumb::-webkit-slider-thumb {
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #1a365d;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 2px solid white;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- ===== NAVIGATION ===== -->
+    <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <a href="/" class="flex items-center py-2 text-blue-600">
-                        <span class="font-bold text-xl" style="color: #1a365d;">BuildBurlington</span>
+                        <span class="font-bold text-xl text-navy-900">BuildBurlington</span>
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation - Shows on large screens -->
-                <div class="nav-items items-center space-x-6 hidden lg:flex">
+                <!-- Desktop Navigation Items -->
+                <div class="nav-items items-center space-x-6">
                     <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
                     <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
-                    <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600 font-semibold" style="color: #1a365d;">The Solution</a>
+                    <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600 font-semibold text-navy-900">The Solution</a>
                     <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
                     <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
-                    <a href="#" class="py-2 px-4 text-white rounded-lg font-medium transition duration-300" style="background-color: #1a365d;">Support the Policy</a>
+                    <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
                 </div>
                 
-                <!-- Hamburger Button - Shows on medium and small screens -->
-                <div class="hamburger-button lg:hidden">
+                <!-- Hamburger Button -->
+                <div class="hamburger-button">
                     <button id="hamburger-btn" class="focus:outline-none">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
@@ -291,15 +225,15 @@
                 </div>
             </div>
             
-            <!-- Mobile Menu - Shows on medium and small screens -->
-            <div id="mobile-menu" class="lg:hidden">
-                <div class="px-2 pt-2 pb-4 space-y-1 bg-white border-t border-gray-200">
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu bg-white">
+                <div class="px-2 pt-2 pb-4 space-y-1">
                     <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
                     <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
-                    <a href="/solution" class="block py-2 px-4 text-blue-600 bg-blue-50 rounded font-medium" style="color: #1a365d;">The Solution</a>
+                    <a href="/solution" class="block py-2 px-4 text-blue-600 bg-blue-50 rounded font-medium text-navy-900">The Solution</a>
                     <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
                     <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
-                    <a href="#" class="block py-2 px-4 text-white text-center rounded-lg font-medium mt-2" style="background-color: #1a365d;">Support the Policy</a>
+                    <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
                 </div>
             </div>
         </div>
@@ -307,19 +241,19 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <!-- Hero Section -->
-    <section class="hero-pattern pt-32 pb-24 text-white">
+    <section class="bg-navy-900 pt-32 pb-24 text-white" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%233366cc\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v极h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g极%3E%3C/svg%3E');">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-12 md:mb-0">
                     <h1 class="text-5xl font-bold mb-6">A Smarter Way to Grow</h1>
                     <p class="text-xl opacity-90 mb-8">Missing Middle Housing can solve Burlington's housing crisis while preserving what makes our city special.</p>
                     <div class="flex space-x-4">
-                        <a href="#human-impact" class="px-6 py-3 bg-white font-semibold rounded-lg shadow-md hover:bg-gray-50" style="color: #1a365d;">See the Impact</a>
+                        <a href="#human-impact" class="px-6 py-3 bg-white font-semibold rounded-lg shadow-md hover极bg-gray-50 text-navy-900">See the Impact</a>
                         <a href="#solution" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-700">Learn How</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
-                    <!-- UPDATED NEIGHBORHOOD VISUALIZATION -->
+                    <!-- Neighborhood Visualization -->
                     <div class="neighborhood-vis">
                         <!-- First row of houses -->
                         <div class="house single-home">S</div>
@@ -328,7 +262,6 @@
                         <div class="house single-home">S</div>
                         <div class="road"></div>
                         <div class="house triplex">T</div>
-                        
                         
                         <!-- Second row of houses -->
                         <div class="house fourplex">F</div>
@@ -378,25 +311,25 @@
     <!-- Human Impact Section -->
     <section id="human-impact" class="py-16 bg-white">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 navy-header">The Human Cost of Burlington's Housing Crisis</h2>
+            <h2 class="text-3xl font-bold text-center mb-12 text-navy-900">The Human Cost of Burlington's Housing Crisis</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="stat-highlight p-6 text-white text-center">
-                    <div class="text-4xl font-bold mb-2">42%</div>
+                <div class="bg-navy-900 p-6 text-white text-center rounded-xl">
+                    <div class="text-4极 font-bold mb-2">42%</div>
                     <p class="opacity-90">Of renters spend more than 30% of income on housing</p>
                 </div>
-                <div class="stat-highlight p-6 text-white text-center">
+                <div class="bg-navy-900 p-6 text-white text-center rounded-xl">
                     <div class="text-4xl font-bold mb-2">7,000+</div>
                     <p class="opacity-90">People on waitlists for affordable housing in Halton</p>
                 </div>
-                <div class="stat-highlight p-6 text-white text-center">
+                <div class="bg-navy-900 p-6 text-white text-center rounded-xl">
                     <div class="text-4xl font-bold mb-2">78%</div>
-                    <p class="opacity-90">Increase in unsheltered homelessness since 2018</p>
+                    <p class="opacity-90">Increase in unsheltered homelessness since 2018</极>
                 </div>
             </div>
             
             <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-red-50 p-6 rounded-xl">
-                    <h3 class="text-xl font-semibold mb-4 text-red-700">Families Priced Out</h3>
+                    <h3 class="text-xl font-semib极 mb-4 text-red-700">Families Priced Out</h3>
                     <p class="text-gray-700">The average young family would need to save for 18 years to afford a down payment on a typical Burlington home.</p>
                 </div>
                 <div class="bg-red-50 p-6 rounded-xl">
@@ -408,34 +341,34 @@
     </section>
 
     <!-- What is Missing Middle Housing -->
-    <section id="solution" class="py-16 light-blue-section">
+    <section id="solution" class="py-16 bg-blue-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 navy-header">What is Missing Middle Housing?</h2>
+                <h2 class="text-3xl font-bold mb-4 text-navy-900">What is Missing Middle Housing?</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Diverse housing types that fit seamlessly into existing neighborhoods while providing more affordable options.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
                     <div class="mb-8">
-                        <h3 class="text-2xl font-semibold mb-4 flex items-center navy-header">
-                            <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3" style="color: #1a365d;">1</span>
+                        <h3 class="text-2xl font-semibold mb-4 flex items-center text-navy-900">
+                            <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-navy-900">1</span>
                             The Problem with Current Zoning
                         </h3>
                         <p class="text-gray-600">Burlington's zoning laws prohibit anything but single-family homes on most residential land, artificially limiting housing supply and driving up prices.</p>
                     </div>
                     
                     <div class="mb-8">
-                        <h3 class="text-2xl font-semibold mb-4 flex items-center navy-header">
-                            <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3" style="color: #1a365d;">2</span>
+                        <h3 class="text-2xl font-semibold mb-4 flex items-center text-navy-900">
+                            <span class="w-8 h-8 rounded-full bg-blue-100极 items-center justify-center mr-3 text-navy-900">2</span>
                             The Missing Middle Solution
                         </h3>
                         <p class="text-gray-600">Allow property owners to build duplexes, triplexes, and fourplexes in neighborhoods currently restricted to only single-family homes.</p>
                     </div>
                     
                     <div>
-                        <h3 class="text-2xl font-semibold mb-4 flex items-center navy-header">
-                            <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3" style="color: #1a365d;">3</span>
+                        <h3 class="text-2xl font-semibold mb-4 flex items-center text-navy-900">
+                            <span class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-navy-900">3</span>
                             Balanced, Organic Growth
                         </h3>
                         <p class="text-gray-600">This approach increases density gradually while preserving neighborhood character and creating more affordable housing options.</p>
@@ -443,7 +376,7 @@
                 </div>
                 
                 <div class="bg-white p-8 rounded-2xl shadow-lg">
-                    <h3 class="text-xl font-semibold mb-6 text-center navy-header">Burlington's Residential Zoning Distribution</h3>
+                    <h3 class="text-xl font-semibold mb-6 text-center text-navy-900">Burlington's Residential Zoning Distribution</h3>
                     <div class="h-80">
                         <canvas id="burlington-pie-chart"></canvas>
                     </div>
@@ -452,9 +385,9 @@
         </div>
     </section>
 
-    <!-- Different style text box with navy -->
+    <!-- Navy Text Box -->
     <div class="max-w-6xl mx-auto px-4 py-8">
-        <div class="navy-text-box">
+        <div class="bg-navy-900 text-white p-8 rounded-2xl shadow-lg">
             <h3 class="text-xl font-semibold mb-4">Why Zoning Reform Matters</h3>
             <p class="mb-3">Burlington's current zoning laws restrict over 80% of residential land to single-family homes only. This artificial scarcity drives up housing costs and prevents the creation of diverse, affordable housing options that would allow people of all ages and incomes to live in our community.</p>
             <p>By allowing missing middle housing types like duplexes, triplexes, and fourplexes, we can create more homes while preserving neighborhood character and increasing housing affordability for everyone.</p>
@@ -465,12 +398,12 @@
     <section class="py-16 bg-white">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 navy-header">How Burlington Compares to Other Cities</h2>
+                <h2 class="text-3xl font-bold mb-4 text-navy-900">How Burlington Compares to Other Cities</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Cities with more medium-density zoning have better housing affordability and construction rates.</p>
             </div>
             
             <div class="mb-12 bg-white p-6 rounded-2xl shadow-lg">
-                <h3 class="text-xl font-semibold mb-6 text-center navy-header">Medium & Low Density Housing Zoning Comparison</h3>
+                <h3 class="text-xl font-semibold mb-6 text-center text-navy-900">Housing Zoning Comparison</h3>
                 <div class="h-96">
                     <canvas id="city-comparison-chart"></canvas>
                 </div>
@@ -478,19 +411,19 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-blue-50 p-6 rounded-xl">
-                    <h3 class="text-xl font-semibold mb-4 navy-header">Better Affordability</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-navy-900">Better Affordability</h3>
                     <p class="text-gray-700 mb-4">Cities with more medium-density zoning have price-to-income ratios 15-25% lower than Burlington's 12.3x.</p>
                     <div class="flex items-center">
                         <div class="w-3/4 bg-gray-200 rounded-full h-3">
-                            <div class="h-3 rounded-full" style="width: 85%; background-color: #1a365d;"></div>
+                            <div class="h-3 rounded-full bg-navy-900" style="width: 85%"></div>
                         </div>
                         <span class="ml-4 text-sm font-medium">85% of comparable cities more affordable</span>
                     </div>
                 </div>
                 
                 <div class="bg-green-50 p-6 rounded-xl">
-                    <h3 class="text-xl font-semibold mb-4 navy-header">Higher Construction Rates</h3>
-                    <p class="text-gray-700 mb-4">Cities with more flexible zoning complete 2-3x more housing units per capita annually than Burlington.</p>
+                    <h3 class="text-xl font-semibold mb-4 text-navy-900">Higher Construction Rates</h3>
+                    <p class="text-gray-700 mb-4">Cities with more flexible zoning complete 2-3x more housing units per capita annually than Burlington.</极>
                     <div class="flex items-center">
                         <div class="w-3/4 bg-gray-200 rounded-full h-3">
                             <div class="bg-green-600 h-3 rounded-full" style="width: 75%"></div>
@@ -503,10 +436,10 @@
     </section>
 
     <!-- Policy Simulator -->
-    <section id="simulator" class="py-16 light-blue-section">
+    <section id="simulator" class="py-16 bg-blue-50">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 navy-header">Policy Impact Simulator</h2>
+            <div class="text-center极b-12">
+                <h2 class="text-3xl font-bold mb-4 text-navy-900">Policy Impact Simulator</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Adjust the sliders to see how missing middle housing could help solve Burlington's housing crisis.</p>
             </div>
             
@@ -534,9 +467,9 @@
                     
                     <div>
                         <label class="block text-gray-700 mb-4 font-medium">Percentage of eligible property owners who choose to convert:</label>
-                        <input type="range" min="0" max="100" value="15" class="w-full slider-thumb" id="conversion-rate-slider">
+                        <input type="range" min="0"极ax="100" value="15" class="w-full slider-thumb" id="conversion-rate-slider">
                         <div class="flex justify-between text-sm text-gray-600 mt-2">
-                            <span>0%</span>
+                            <span> </span>
                             <span id="conversion-rate-value" class="font-bold">15%</span>
                             <span>100%</span>
                         </div>
@@ -544,7 +477,7 @@
                 </div>
                 
                 <div class="bg-blue-50 p-8 rounded-2xl shadow-md">
-                    <h3 class="text-xl font-semibold mb-6 text-center navy-header">Impact Results</h3>
+                    <h3 class="text-xl font-semibold mb-6 text-center text-navy-900">Impact Results</h3>
                     
                     <div class="space-y-6">
                         <div>
@@ -574,7 +507,7 @@
                                 <span class="text-gray-700">Housing gap reduction:</span>
                                 <span class="font-bold text-green-600 text-xl" id="gap-reduction">84%</span>
                             </div>
-                            <div class="progress-container">
+                            <div class极progress-container">
                                 <div class="progress-bar" id="gap-reduction-bar" style="width: 84%"></div>
                                 <div class="progress-tooltip" id="gap-reduction-tooltip">84%</div>
                             </div>
@@ -604,48 +537,48 @@
     <section class="py-16 bg-white">
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4 navy-header">Benefits of Missing Middle Housing</h2>
+                <h2 class="text-3xl font-bold mb-4 text-navy-900">Benefits of Missing Middle Housing</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">This approach offers multiple advantages over both status quo and high-density solutions.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="policy-card bg-white p-6 shadow-md">
+                <div class="bg-white p-6 shadow-md rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <svg class="w-6 h-6 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m极 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 极 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 navy-header">Affordability</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Affordability</h3>
                     <p class="text-gray-600">Smaller units in multi-plex buildings are naturally more affordable than single-family homes.</p>
                 </div>
                 
-                <div class="policy-card bg-white p-6 shadow-md">
+                <div class="bg-white p-6 shadow-md rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
+                        <svg class="w-6 h-6 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 navy-header">Diverse Community</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Diverse Community</h3>
                     <p class="text-gray-600">Allows people of different ages, incomes, and family types to live in the same neighborhoods.</p>
                 </div>
                 
-                <div class="policy-card bg-white p-6 shadow-md">
+                <div class="bg-white p-6 shadow-md rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
+                        <svg class="w-6 h-6 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 navy-header">Neighborhood Character</h3>
-                    <p class="text-gray-600">Preserves the scale and feel of existing neighborhoods while gently increasing density.</p>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Neighborhood Character</h3>
+                    <p class="text-gray-极0">Preserves the scale and feel of existing neighborhoods while gently increasing density.</p>
                 </div>
                 
-                <div class="policy-card bg-white p-6 shadow-md">
+                <div class="bg-white p-6 shadow-md rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                     <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: #1a365d;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-8 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        <svg class="w-6 h-6 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-8 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1极2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 navy-header">Property Rights</h3>
+                    <h3 class="text-xl font-semibold mb-3 text-navy-900">Property Rights</h3>
                     <p class="text-gray-600">Gives homeowners more options to use their property as they see fit.</p>
                 </div>
             </div>
@@ -653,12 +586,12 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="py-16" style="background-color: #1a365d;">
+    <section class="py-16 bg-navy-900">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-6 text-white">Ready to Solve Burlington's Housing Crisis?</h2>
             <p class="text-xl mb-8 max-w-3xl mx-auto text-slate-200">Missing middle housing is a practical, effective solution that benefits everyone.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="/action" class="px-8 py-3 bg-white font-semibold rounded-lg shadow-md hover:bg-gray-100" style="color: #1a365d;">Contact City Council</a>
+                <a href="/action" class="px-8 py-3 bg-white font-semibold rounded-lg shadow-md hover:bg-gray-100 text-navy-900">Contact City Council</a>
                 <a href="#" class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-700">Download Fact Sheet</a>
             </div>
         </div>
@@ -668,80 +601,203 @@
     <footer class="bg-gray-800 text-white py-12">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
+                <div class="mb-6极d:mb-0">
                     <h3 class="text-2xl font-bold text-white">BuildBurlington</h3>
                     <p class="text-gray-400">A campaign for housing solutions</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
                     <a href="#" class="text-gray-400 hover:text-white">Contact</a>
-                    <a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Sources</a>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+                <p>© 2023 BuildBurlington. All rights reserved. Data sources: Statistics Canada, CMHC, City of Burlington.</p>
             </div>
         </div>
     </footer>
 
-    <!-- ===== JAVASCRIPT ===== -->
     <script>
-    // Hamburger menu functionality
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (hamburgerBtn && mobileMenu) {
-        hamburgerBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburgerBtn.classList.toggle('hamburger-active');
-            mobileMenu.classList.toggle('mobile-menu-open');
+    // CSV Data from ZoningComparison.csv
+    const zoningData = {
+        "Burlington": {
+            "Single Detached Residential": 7.7,
+            "Low Density Residential": 7.85,
+            "Medium Density Residential": 3.24,
+            "High Density / Mixed Use": 2.43
+        },
+        "Oakville": {
+            "Single Detached Residential": 1.6,
+            "Low Density Residential": 15.2,
+            "Medium Density Residential": 3.73,
+            "High Density / Mixed Use": 1.85
+        },
+        "Mississauga": {
+            "Single Detached Residential": 32.34,
+            "Low Density Residential": 0.29,
+            "Medium Density Residential": 5.03,
+            "High Density / Mixed Use": 3.65
+        },
+        "Toronto": {
+            "Single Detached Residential": 2.58,
+            "Low Density Residential": 38.2,
+            "Medium Density Residential": 9.82,
+            "High Density / Mixed Use": 3.89
+        },
+        "Hamilton": {
+            "Single Detached Residential": 5.5,
+            "Low Density Residential": 1.24,
+            "Medium Density Residential": 1.31,
+            "High Density / Mixed Use": 0.13
+        }
+    };
+
+    // Calculate residential percentages for each city
+    const calculateResidentialPercentages = (cityData) => {
+        const residentialTypes = [
+            "Single Detached Residential",
+            "Low Density Residential", 
+            "Medium Density Residential",
+            "High Density / Mixed Use"
+        ];
+        
+        // Calculate total residential area
+        const totalResidential = residentialTypes.reduce((sum, type) => sum + cityData[type], 0);
+        
+        // Calculate percentages for each residential type
+        const percentages = {};
+        residentialTypes.forEach(type => {
+            percentages[type] = (cityData[type] / totalResidential) * 100;
         });
         
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const isClickInsideMenu = mobileMenu.contains(e.target);
-            const isClickOnHamburger = hamburgerBtn.contains(e.target);
-            
-            if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
-                hamburgerBtn.classList.remove('hamburger-active');
-                mobileMenu.classList.remove('mobile-menu-open');
+        return percentages;
+    };
+
+    // Process data for Burlington pie chart
+    const burlingtonResidentialData = calculateResidentialPercentages(zoningData["Burlington"]);
+
+    // Process data for city comparison chart - focus on cities with different zoning approaches
+    const selectedCities = ["Burlington", "Oakville", "Mississauga", "Toronto"];
+    const cityComparisonData = {
+        labels: selectedCities,
+        datasets: [
+            {
+                label: 'Single Detached',
+                data: selectedCities.map(city => calculateResidentialPercentages(zoningData[city])["Single Detached Residential"]),
+                backgroundColor: '#2d4a8a'
+            },
+            {
+                label: 'Low Density',
+                data: selectedCities.map(city => calculateResidentialPercentages(zoningData[city])["Low Density Residential"]),
+                backgroundColor: '#FF6B6B'
+            },
+            {
+                label: 'Medium Density',
+                data: selectedCities.map(city => calculateResidentialPercentages(zoningData[city])["Medium Density Residential"]),
+                backgroundColor: '#4ECDC4'
+            },
+            {
+                label: 'High Density',
+                data: selectedCities.map(city => calculateResidentialPercentages(zoningData[city])["High Density / Mixed Use"]),
+                backgroundColor: '#FFE66D'
             }
-        });
-        
-        // Close menu when a link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburgerBtn.classList.remove('hamburger-active');
-                mobileMenu.classList.remove('mobile-menu-open');
-            });
-        });
-    }
+        ]
+    };
 
-    // Zoning data from your ZoningComparison.csv
-    const zoningData = [
-        {City: 'Burlington', Other: 64.03, Commercial: 9.49, LowDensity: 7.85, SingleDetached: 7.7, Parks: 4.71, MediumDensity: 3.24, HighDensity: 2.43, Employment: 0.56},
-        {City: 'Oakville', Other: 41.44, Commercial: 2.11, LowDensity: 15.2, SingleDetached: 1.6, Parks: 5.82, MediumDensity: 3.73, HighDensity: 1.85, Employment: 27.43},
-        {City: 'Milton', Other: 59.55, Commercial: 1.92, LowDensity: 1.65, SingleDetached: 0.0, Parks: 6.42, MediumDensity: 13.34, HighDensity: 1.69, Employment: 15.42},
-        {City: 'Hamilton', Other: 65.68, Commercial: 0.94, LowDensity: 1.24, SingleDetached: 5.5, Parks: 21.47, MediumDensity: 1.31, HighDensity: 0.13, Employment: 3.72},
-        {City: 'Mississauga', Other: 5.24, Commercial: 5.13, LowDensity: 0.29, SingleDetached: 32.34, Parks: 14.83, MediumDensity: 5.03, HighDensity: 3.65, Employment: 33.5},
-        {City: 'Toronto', Other: 13.56, Commercial: 0.25, LowDensity: 38.2, SingleDetached: 2.58, Parks: 20.24, MediumDensity: 9.82, HighDensity: 3.89, Employment: 11.45},
-        {City: 'London', Other: 38.33, Commercial: 4.22, LowDensity: 1.48, SingleDetached: 16.69, Parks: 19.38, MediumDensity: 4.99, HighDensity: 4.08, Employment: 10.84}
-    ];
-
-    // Calculate medium+low density percentage for each city
-    const cityComparisonData = zoningData.map(city => {
-        const mediumLowDensity = parseFloat(city.LowDensity) + parseFloat(city.MediumDensity) + parseFloat(city.SingleDetached);
-        return {
-            city: city.City,
-            percentage: mediumLowDensity
-        };
+    // Burlington Zoning Pie Chart
+    const burlingtonPieCtx = document.getElementById('burlington-pie-chart').getContext('2d');
+    const burlingtonPieChart = new Chart(burlingtonPieCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Single Detached', 'Low Density', 'Medium Density', 'High Density'],
+            datasets: [{
+                data: [
+                    burlingtonResidentialData["Single Detached Residential"],
+                    burlingtonResidentialData["Low Density Residential"],
+                    burlingtonResidentialData["Medium Density Residential"],
+                    burlingtonResidentialData["High Density / Mixed Use"]
+                ],
+                backgroundColor: [
+                    '#2d4a8a',
+                    '#FF6B6B',
+                    '#4ECDC4',
+                    '#FFE66D'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 14
+                        },
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.raw.toFixed(1) + '%';
+                        }
+                    }
+                }
+            }
+        }
     });
-
-    // Sort by percentage (descending)
-    cityComparisonData.sort((a, b) => b.percentage - a.percentage);
-
-    // Policy simulator elements
+    
+    // City Comparison Bar Chart
+    const cityComparisonCtx = document.getElementById('city-comparison-chart').getContext('2d');
+    const cityComparisonChart = new Chart(cityComparisonCtx, {
+        type: 'bar',
+        data: cityComparisonData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 14
+                        },
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw.toFixed(1) + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Policy Simulator
     const policyAdoptionSlider = document.getElementById('policy-adoption-slider');
     const policyAdoptionValue = document.getElementById('policy-adoption-value');
     const unitsPerPropertySlider = document.getElementById('units-per-property-slider');
@@ -749,228 +805,120 @@
     const conversionRateSlider = document.getElementById('conversion-rate-slider');
     const conversionRateValue = document.getElementById('conversion-rate-value');
     
-    // Result elements
-    const newUnitsElement = document.getElementById('new-units');
-    const peopleHousedElement = document.getElementById('people-housed');
-    const gapReductionElement = document.getElementById('gap-reduction');
-    const priceReductionElement = document.getElementById('price-reduction');
+    const newUnitsEl = document.getElementById('new-units');
+    const peopleHousedEl = document.getElementById('people-housed');
+    const gapReductionEl = document.getElementById('gap-reduction');
+    const priceReductionEl = document.getElementById('price-reduction');
     
-    // Progress bar elements
     const newUnitsBar = document.getElementById('new-units-bar');
     const peopleHousedBar = document.getElementById('people-housed-bar');
     const gapReductionBar = document.getElementById('gap-reduction-bar');
     const priceReductionBar = document.getElementById('price-reduction-bar');
     
-    // Tooltip elements
     const newUnitsTooltip = document.getElementById('new-units-tooltip');
     const peopleHousedTooltip = document.getElementById('people-housed-tooltip');
     const gapReductionTooltip = document.getElementById('gap-reduction-tooltip');
     const priceReductionTooltip = document.getElementById('price-reduction-tooltip');
     
-    // Constants for calculations
-    const SINGLE_FAMILY_LOTS = 35000; // Estimated number of single-family lots in Burlington
-    const CURRENT_HOUSING_GAP = 6947; // From BurlingtonComparison.csv
-    const AVERAGE_HOUSEHOLD_SIZE = 2.5; // Standard estimate
+    // Update slider values
+    policyAdoptionSlider.addEventListener('input', updateSimulator);
+    unitsPerPropertySlider.addEventListener('input', update极imulator);
+    conversionRateSlider.addEventListener('input', updateSimulator);
     
-    // Function to update policy simulator results
-    function updatePolicySimulator() {
-        const policyAdoption = parseInt(policyAdoptionSlider.value);
+    function updateSimulator() {
+        // Update displayed values
+        policyAdoptionValue.textContent = policyAdoptionSlider.value + '%';
+        
+        const unitsValue = parseFloat(unitsPerPropertySlider.value);
+        unitsPerPropertyValue.textContent = unitsValue + (unitsValue === 2 ? ' (Duplex)' : 
+                                                       unitsValue === 3 ? ' (Triplex)' : ' (Fourplex)');
+        
+        conversionRateValue.textContent = conversionRateSlider.value + '%';
+        
+        // Calculate impacts
+        const policyAdoption = parseInt(policyAdoptionSlider.value) / 100;
         const unitsPerProperty = parseFloat(unitsPerPropertySlider.value);
-        const conversionRate = parseInt(conversionRateSlider.value);
+        const conversionRate = parseInt(conversionRateSlider.value) / 100;
         
-        // Update display values
-        policyAdoptionValue.textContent = `${policyAdoption}%`;
-        unitsPerPropertyValue.textContent = `${unitsPerProperty} (${getHousingType(unitsPerProperty)})`;
-        conversionRateValue.textContent = `${conversionRate}%`;
+        // Base values
+        const eligibleLots = 78000; // Estimated single-family lots in Burlington
+        const housingGap = 28000; // Estimated housing units needed
+        const peoplePerUnit = 2.5; // Average household size
         
-        // Calculate results
-        const eligibleProperties = SINGLE_FAMILY_LOTS * (policyAdoption / 100);
-        const convertedProperties = eligibleProperties * (conversionRate / 100);
-        const newUnits = Math.round(convertedProperties * (unitsPerProperty - 1)); // Subtract 1 because we're replacing existing units
+        // Calculate new units - remove the cap to allow unlimited growth
+        const newUnits = eligibleLots * policyAdoption * conversionRate * (unitsPerProperty - 1);
         
-        const peopleHoused = Math.round(newUnits * AVERAGE_HOUSEHOLD_SIZE);
-        const gapReduction = Math.round((newUnits / CURRENT_HOUSING_GAP) * 100);
+        // Calculate people housed
+        const peopleHoused = newUnits * peoplePerUnit;
         
-        // Price reduction estimation based on research showing 10-15% price reduction for 10% supply increase
-        const supplyIncrease = (newUnits / SINGLE_FAMILY_LOTS) * 100;
-        const priceReductionMin = Math.round(supplyIncrease * 1.0);
-        const priceReductionMax = Math.round(supplyIncrease * 1.5);
+        // Calculate gap reduction percentage (can exceed 100%)
+        const gapReduction = (newUnits / housingGap) * 100;
         
-        // Update results
-        newUnitsElement.textContent = newUnits.toLocaleString();
-        peopleHousedElement.textContent = peopleHoused.toLocaleString();
-        gapReductionElement.textContent = `${gapReduction}%`;
-        priceReductionElement.textContent = `${priceReductionMin}-${priceReductionMax}%`;
+        // Calculate price reduction (non-linear relationship, caps at 30%)
+        const priceReduction = Math.min(30, (newUnits / housingGap) * 18);
         
-        // Update progress bars with overflow handling
-        updateProgressBar(newUnitsBar, newUnitsTooltip, newUnits / 30000); // 30,000 is the max expected for 100%
-        updateProgressBar(peopleHousedBar, peopleHousedTooltip, peopleHoused / 75000); // 75,000 is the max expected for 100%
-        updateProgressBar(gapReductionBar, gapReductionTooltip, gapReduction / 100);
-        updateProgressBar(priceReductionBar, priceReductionTooltip, (priceReductionMin / 30)); // 30% is the max expected for 100%
-    }
-    
-    // Update progress bars with overflow handling
-    function updateProgressBar(barElement, tooltipElement, ratio) {
-        const percentage = Math.round(ratio * 100);
+        // Update display with formatted numbers
+        newUnitsEl.textContent = Math.round(newUnits).toLocaleString();
+        peopleHousedEl.textContent = Math.round(peopleHoused).toLocaleString();
+        gapReductionEl.textContent = Math.min(1000, Math.round(gapReduction)) + '%';
+        priceReductionEl.textContent = Math.max(0, (priceReduction - 6)).toFixed(0) + '-' + Math.round(priceReduction) + '%';
         
-        if (ratio <= 1) {
-            // Within normal range (0-100%)
-            barElement.style.width = `${percentage}%`;
-            barElement.classList.remove('extended');
-            tooltipElement.style.display = 'none';
+        // Update progress bars - allow them to extend beyond 100%
+        const newUnitsPercentage = Math.min(500, (newUnits / housingGap) * 100);
+        newUnitsBar.style.width = Math.min(100, newUnitsPercentage) + '%';
+        newUnitsTooltip.textContent = Math.round(newUnitsPercentage) + '%';
+        
+        const peopleHousedPercentage = Math.min(500, (peopleHoused / (housingGap * peoplePerUnit)) * 100);
+        peopleHousedBar.style.width = Math.min(100, peopleHousedPercentage) + '%';
+        peopleHousedTooltip.textContent = Math.round(peopleHousedPercentage) + '%';
+        
+        gapReductionBar.style.width = Math.min(100, gapReduction) + '%';
+        gapReductionTooltip.textContent = Math.round(gapReduction) + '%';
+        
+        priceReductionBar.style.width = (priceReduction / 30 * 100) + '%';
+        priceReductionTooltip.textContent = Math.round(priceReduction / 30 * 100) + '%';
+        
+        // Handle extended progress bars (over 100%)
+        if (newUnitsPercentage > 100) {
+            newUnitsBar.classList.add('extended');
+            newUnitsTooltip.style.display = 'block';
         } else {
-            // Exceeding normal range (>100%)
-            barElement.style.width = '100%';
-            barElement.classList.add('extended');
-            tooltipElement.textContent = `${percentage}%`;
-            tooltipElement.style.display = 'block';
+            newUnitsBar.classList.remove('extended');
+            newUnitsTooltip.style.display = 'none';
+        }
+        
+        if (peopleHousedPercentage > 100) {
+            peopleHousedBar.classList.add('extended');
+            peopleHousedTooltip.style.display = 'block';
+        } else {
+            peopleHousedBar.classList.remove('extended');
+            peopleHousedTooltip.style.display = 'none';
+        }
+        
+        if (gapReduction > 100) {
+            gapReductionBar.classList.add('extended');
+            gapReductionTooltip.style.display = 'block';
+        } else {
+            gapReductionBar.classList.remove('extended');
+            gapReductionTooltip.style.display = 'none';
         }
     }
     
-    // Helper function to get housing type name
-    function getHousingType(units) {
-        if (units === 2) return 'Duplex';
-        if (units === 2.5) return 'Duplex/Triplex';
-        if (units === 3) return 'Triplex';
-        if (units === 3.5) return 'Triplex/Fourplex';
-        if (units === 4) return 'Fourplex';
-        return 'Multi-plex';
-    }
+    // Initialize simulator
+    updateSimulator();
     
-    // Initialize policy simulator
-    if (policyAdoptionSlider) {
-        policyAdoptionSlider.addEventListener('input', updatePolicySimulator);
-        unitsPerPropertySlider.addEventListener('input', updatePolicySimulator);
-        conversionRateSlider.addEventListener('input', updatePolicySimulator);
-        updatePolicySimulator();
-    }
-
-    // Create Burlington zoning pie chart using only residential data
-    function createBurlingtonPieChart() {
-        const ctx = document.getElementById('burlington-pie-chart');
-        if (!ctx) return;
+    // Tooltip hover functionality
+    const progressContainers = document.querySelectorAll('.progress-container');
+    
+    progressContainers.forEach(container => {
+        const tooltip = container.querySelector('.progress-tooltip');
         
-        const burlingtonData = zoningData.find(city => city.City === 'Burlington');
-        
-        // Calculate total residential area
-        const residentialTotal = parseFloat(burlingtonData.SingleDetached) + 
-                               parseFloat(burlingtonData.LowDensity) + 
-                               parseFloat(burlingtonData.MediumDensity) + 
-                               parseFloat(burlingtonData.HighDensity);
-        
-        // Calculate percentages of residential area only
-        const singleDetachedPct = (parseFloat(burlingtonData.SingleDetached) / residentialTotal * 100).toFixed(1);
-        const lowDensityPct = (parseFloat(burlingtonData.LowDensity) / residentialTotal * 100).toFixed(1);
-        const mediumDensityPct = (parseFloat(burlingtonData.MediumDensity) / residentialTotal * 100).toFixed(1);
-        const highDensityPct = (parseFloat(burlingtonData.HighDensity) / residentialTotal * 100).toFixed(1);
-        
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Single Detached', 'Low Density', 'Medium Density', 'High Density'],
-                datasets: [{
-                    data: [singleDetachedPct, lowDensityPct, mediumDensityPct, highDensityPct],
-                    backgroundColor: [
-                        '#FF6B6B', // Red
-                        '#4ECDC4', // Teal
-                        '#FFE66D', // Yellow
-                        '#6B5B95'  // Purple
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            font: {
-                                size: 12
-                            },
-                            padding: 15
-                        }
-                    },
-                    title: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.label}: ${context.raw}%`;
-                            }
-                        }
-                    }
-                }
-            }
+        container.addEventListener('mouseenter', () => {
+            tooltip.style.display = 'block';
         });
-    }
-
-    // Create city comparison chart using actual data
-    function createCityComparisonChart() {
-        const ctx = document.getElementById('city-comparison-chart');
-        if (!ctx) return;
         
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: cityComparisonData.map(item => item.city),
-                datasets: [{
-                    label: '% Medium/Low Density Housing',
-                    data: cityComparisonData.map(item => item.percentage),
-                    backgroundColor: cityComparisonData.map(item => 
-                        item.city === 'Burlington' ? '#f59e0b' : '#FF6B6B'
-                    ),
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: ${context.raw}%`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Percentage of Medium/Low Density Housing'
-                        },
-                        max: 100
-                    },
-                    y: {
-                        ticks: {
-                            font: {
-                                weight: function(context) {
-                                    return context.tick.label === 'Burlington' ? 'bold' : 'normal';
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        container.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
         });
-    }
-
-    // Initialize charts when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        createBurlingtonPieChart();
-        createCityComparisonChart();
     });
 </script>
-</body>
-</html>

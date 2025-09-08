@@ -6,36 +6,41 @@
     <title>Data Sources - Build Burlington</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .source-card {
-            transition: all 0.3s ease;
-            border-left: 4px solid #2563eb;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .source-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+        
+        /* ===== NAVIGATION STYLES ===== */
+        .hamburger-button {
+            display: none;
         }
-    </style>
-</head>
-<body class="font-sans bg-gray-50">
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build Burlington - Fixed Navigation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+        
         .hamburger-line {
             display: block;
-            width: 25px;
-            height: 3px;
-            margin: 5px auto;
-            background-color: #4b5563;
+            width: 24px;
+            height: 2px;
+            background-color: #374151;
+            margin: 6px 0;
             transition: all 0.3s ease;
         }
         
+        #mobile-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        #mobile-menu.mobile-menu-open {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .hamburger-active .hamburger-line:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
+            transform: rotate(45deg) translate(6px, 6px);
         }
         
         .hamburger-active .hamburger-line:nth-child(2) {
@@ -43,21 +48,11 @@
         }
         
         .hamburger-active .hamburger-line:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
+            transform: rotate(-45deg) translate(6px, -6px);
         }
         
-        .mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .mobile-menu-open {
-            max-height: 500px;
-        }
-        
-        /* Custom breakpoint to prevent hamburger and menu items from showing simultaneously */
-        @media (max-width: 950px) {
+        /* Show hamburger on medium and small screens */
+        @media (max-width: 1023px) {
             .nav-items {
                 display: none;
             }
@@ -67,44 +62,103 @@
             }
         }
         
-        @media (min-width: 951px) {
-            .nav-items {
-                display: flex;
-            }
-            
-            .hamburger-button {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: none;
-            }
+        /* ===== COMPONENT STYLES ===== */
+        .hero-pattern {
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a8a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-pattern::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .data-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .source-card {
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .source-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .navy-header {
+            color: #1a365d;
+        }
+        
+        .light-blue-section {
+            background-color: #dbeafe;
+        }
+        
+        .navy-text-box {
+            background: linear-gradient(135deg, #1a365d 0%, #2d4a8a 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-highlight {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #1a365d 50%, transparent 100%);
         }
     </style>
 </head>
-<body class="font-sans bg-gray-50">
-    <!-- Navigation -->
+<body class="bg-gray-50">
+    <!-- ===== NAVIGATION ===== -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <a href="/" class="flex items-center py-2 text-blue-600">
-                        <span class="font-bold text-xl">BuildBurlington</span>
+                        <span class="font-bold text-xl" style="color: #1a365d;">BuildBurlington</span>
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation Items -->
-                <div class="nav-items items-center space-x-6">
+                <!-- Desktop Navigation - Shows on large screens -->
+                <div class="nav-items items-center space-x-6 hidden lg:flex">
                     <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
                     <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
                     <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
                     <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
-                    <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
-                    <a href="#" class="py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-300">Support the Policy</a>
+                    <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600 font-semibold" style="color: #1a365d;">Data Sources</a>
+                    <a href="#" class="py-2 px-4 text-white rounded-lg font-medium transition duration-300" style="background-color: #1a365d;">Support the Policy</a>
                 </div>
                 
-                <!-- Hamburger Button -->
-                <div class="hamburger-button">
+                <!-- Hamburger Button - Shows on medium and small screens -->
+                <div class="hamburger-button lg:hidden">
                     <button id="hamburger-btn" class="focus:outline-none">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
@@ -113,26 +167,287 @@
                 </div>
             </div>
             
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="mobile-menu bg-white">
-                <div class="px-2 pt-2 pb-4 space-y-1">
+            <!-- Mobile Menu - Shows on medium and small screens -->
+            <div id="mobile-menu" class="lg:hidden">
+                <div class="px-2 pt-2 pb-4 space-y-1 bg-white border-t border-gray-200">
                     <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
                     <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
                     <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
                     <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
-                    <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
-                    <a href="#" class="block py-3 px-4 bg-blue-600 text-white text-center rounded-lg font-medium mt-2">Support the Policy</a>
+                    <a href="/sources" class="block py-2 px-4 text-blue-600 bg-blue-50 rounded font-medium" style="color: #1a365d;">Data Sources</a>
+                    <a href="#" class="block py-2 px-4 text-white text-center rounded-lg font-medium mt-2" style="background-color: #1a365d;">Support the Policy</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    
+    <!-- ===== MAIN CONTENT ===== -->
+    <!-- Hero Section -->
+    <section class="hero-pattern pt-24 pb-20 text-white">
+        <div class="max-w-6xl mx-auto px-4 text-center hero-content">
+            <div class="data-icon mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Transparent Data Sources</h1>
+            <p class="text-xl opacity-90 mb-10 max-w-3xl mx-auto">Evidence-based policy requires reliable, verifiable data. Explore our comprehensive sources below.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+                <div class="stat-highlight p-6 text-white text-center">
+                    <div class="text-3xl font-bold mb-2">10+</div>
+                    <p class="text-sm opacity-90">Primary Data Sources</p>
+                </div>
+                <div class="stat-highlight p-6 text-white text-center">
+                    <div class="text-3xl font-bold mb-2">100%</div>
+                    <p class="text-sm opacity-90">Publicly Available Data</p>
+                </div>
+                <div class="stat-highlight p-6 text-white text-center">
+                    <div class="text-3xl font-bold mb-2">0</div>
+                    <p class="text-sm opacity-90">Proprietary Data Sources</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources Content -->
+    <div class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="text-xl text-gray-700 text-center mb-12 max-w-3xl mx-auto">Some data is estimated if there is no data available. Estimated data is never used to prove a trend only to fill in the gaps to give users a full picture.</p>
+            
+            <!-- Source Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">Canada Mortgage and Housing Corporation (CMHC)</h2>
+                    <p class="text-gray-700 mb-4">The CMHC provides comprehensive data on housing markets across Canada, including rental market surveys and housing starts/completions data.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Rental market statistics</li>
+                            <li>Housing starts and completions</li>
+                            <li>Vacancy rate data</li>
+                            <li>Average rent prices</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.cmhc-schl.gc.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit CMHC website →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">Statistics Canada</h2>
+                    <p class="text-gray-700 mb-4">Canada's national statistical agency provides data on population, income, and economic indicators that are essential for housing analysis.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Census population data</li>
+                            <li>Household income statistics</li>
+                            <li>Demographic information</li>
+                            <li>Economic indicators</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.statcan.gc.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit Statistics Canada →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">City of Burlington Reports</h2>
+                    <p class="text-gray-700 mb-4">Official publications and reports from the City of Burlington provide local context and specific municipal data.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Local housing strategy documents</li>
+                            <li>Official plan and zoning data</li>
+                            <li>Municipal demographic reports</li>
+                            <li>Housing needs assessments</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.burlington.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit City of Burlington →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">Teranet-National Bank House Price Index</h2>
+                    <p class="text-gray-700 mb-4">Provides reliable data on housing price trends across Canadian municipalities.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Historical home price data</li>
+                            <li>Price index comparisons</li>
+                            <li>Market trend analysis</li>
+                        </ul>
+                    </div>
+                    <a href="https://housepriceindex.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit House Price Index →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">CREA/RAHB Housing Market Data</h2>
+                    <p class="text-gray-700 mb-4">The Canadian Real Estate Association and Realtors Association of Hamilton-Burlington provide comprehensive housing market data.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Current housing prices</li>
+                            <li>Market trends and analysis</li>
+                            <li>Sales volume data</li>
+                            <li>Comparative market analysis</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.crea.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit CREA →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">CMHC Housing Market Information Portal</h2>
+                    <p class="text-gray-700 mb-4">Comprehensive housing market data and analysis from Canada's national housing agency.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Market analysis reports</li>
+                            <li>Housing market outlook</li>
+                            <li>Supply and demand indicators</li>
+                            <li>Market condition assessments</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.cmhc-schl.gc.ca/en/housing-market-information" target="_blank" class="text-blue-600 hover:underline font-medium">Visit HMIP →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">CMHC Starts and Completions Survey</h2>
+                    <p class="text-gray-700 mb-4">Detailed data on housing construction activity across Canadian municipalities.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Housing starts by type</li>
+                            <li>Completion timelines</li>
+                            <li>Construction activity trends</li>
+                            <li>Supply pipeline analysis</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.cmhc-schl.gc.ca/en/professionals/housing-markets-data-and-research/housing-data/data-tables/starts-and-completions" target="_blank" class="text-blue-600 hover:underline font-medium">View Data Tables →</a>
+                </div>
+                
+                <div class="source-card bg-blue-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4 navy-header">Municipal Open Data Portals</h2>
+                    <p class="text-gray-700 mb-4">Zoning and planning data from municipal open data websites across Southern Ontario.</p>
+                    <div class="mb-4">
+                        <h3 class="font-semibold mb-2 navy-header">Datasets provided:</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>Zoning bylaw information</li>
+                            <li>Land use designations</li>
+                            <li>Official plan designations</li>
+                            <li>Planning policy data</li>
+                        </ul>
+                    </div>
+                    <a href="https://open.burlington.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit Burlington Open Data →</a>
+                </div>
+            </div>
+            
+            <!-- Detailed Data Source Table -->
+            <div class="bg-gray-50 p-8 rounded-xl">
+                <h2 class="text-3xl font-semibold mb-6 navy-header">Detailed Data References</h2>
+                <p class="text-gray-700 mb-8">Below is a comprehensive table showing exactly which data points come from which sources.</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-3 px-4 text-left font-semibold navy-header">Data Point</th>
+                                <th class="py-3 px-4 text-left font-semibold navy-header">Source</th>
+                                <th class="py-3 px-4 text-left font-semibold navy-header">Publication Date</th>
+                                <th class="py-3 px-4 text-left font-semibold navy-header">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="py-3 px-4">Burlington Housing Prices (2010-2024)</td>
+                                <td class="py-3 px-4">Teranet-National Bank House Price Index, CREA/RAHB</td>
+                                <td class="py-3 px-4">Q1 2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Report</a></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4">Ontario Median Income Data</td>
+                                <td class="py-3 px-4">Statistics Canada</td>
+                                <td class="py-3 px-4">2023 Census</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Data</a></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">Burlington Rental Market Survey</td>
+                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
+                                <td class="py-3 px-4">October 2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Survey</a></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4">Housing Starts and Completions</td>
+                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
+                                <td class="py-3 px-4">2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Data</a></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">Burlington Population Data</td>
+                                <td class="py-3 px-4">Statistics Canada, Burlington Official Plan</td>
+                                <td class="py-3 px-4">2021 Census</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Census</a></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4">Vacancy Rate Data</td>
+                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
+                                <td class="py-3 px-4">October 2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Report</a></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">Inter-City Comparison Data</td>
+                                <td class="py-3 px-4">Various Sources (Compilation)</td>
+                                <td class="py-3 px-4">2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">Methodology</a></td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4">Zoning Comparison Data</td>
+                                <td class="py-3 px-4">Municipal Open Data Portals</td>
+                                <td class="py-3 px-4">2024</td>
+                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Data</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Methodology Section -->
+            <div class="mt-12 navy-text-box">
+                <h2 class="text-2xl font-semibold mb-4">Methodology Note</h2>
+                <p class="mb-4">All data analysis follows standard statistical practices. Where data from different sources are combined or compared, adjustments have been made for consistency in:</p>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Inflation adjustment to 2024 dollars</li>
+                    <li>Standardized geographic boundaries</li>
+                    <li>Consistent time periods for comparison</li>
+                    <li>Per capita calculations using consistent population data</li>
+                </ul>
+                <p>For specific methodological questions, please <a href="#" class="text-blue-300 hover:underline">contact our research team</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold text-white">BuildBurlington</h3>
+                    <p class="text-gray-400">A campaign for housing solutions</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+                    <a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // Hamburger menu functionality
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
+    // Hamburger menu functionality
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (hamburgerBtn && mobileMenu) {
         hamburgerBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             hamburgerBtn.classList.toggle('hamburger-active');
@@ -158,185 +473,7 @@
                 mobileMenu.classList.remove('mobile-menu-open');
             });
         });
-        
-        // Display current screen width and navigation mode
-        function updateScreenInfo() {
-            const width = window.innerWidth;
-            document.getElementById('screen-width').textContent = width;
-            
-            const mode = width > 950 ? 'Desktop' : 'Mobile';
-            document.getElementById('nav-mode').textContent = mode;
-        }
-        
-        window.addEventListener('resize', updateScreenInfo);
-        window.addEventListener('load', updateScreenInfo);
+    }
     </script>
-</body>
-</html>
-    <!-- Data Sources Content -->
-    <div class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <h1 class="text-4xl font-bold text-center mb-6">Data Sources</h1>
-            <p class="text-xl text-gray-700 text-center mb-12 max-w-3xl mx-auto">Transparent and verifiable data is essential for informed policy decisions. All data presented on this website comes from reputable public sources. Some data is estimated if there is no data available. Estimated data is never used to prove a trend only to fill in the gaps to give users a full picture.</p>
-            
-            <!-- Source Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                <div class="source-card bg-blue-50 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Canada Mortgage and Housing Corporation (CMHC)</h2>
-                    <p class="text-gray-700 mb-4">The CMHC provides comprehensive data on housing markets across Canada, including rental market surveys and housing starts/completions data.</p>
-                    <div class="mb-4">
-                        <h3 class="font-semibold mb-2">Datasets provided:</h3>
-                        <ul class="list-disc list-inside text-gray-600">
-                            <li>Rental market statistics</li>
-                            <li>Housing starts and completions</li>
-                            <li>Vacancy rate data</li>
-                            <li>Average rent prices</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.cmhc-schl.gc.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit CMHC website →</a>
-                </div>
-                
-                <div class="source-card bg-blue-50 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Statistics Canada</h2>
-                    <p class="text-gray-700 mb-4">Canada's national statistical agency provides data on population, income, and economic indicators that are essential for housing analysis.</p>
-                    <div class="mb-4">
-                        <h3 class="font-semibold mb-2">Datasets provided:</h3>
-                        <ul class="list-disc list-inside text-gray-600">
-                            <li>Census population data</li>
-                            <li>Household income statistics</li>
-                            <li>Demographic information</li>
-                            <li>Economic indicators</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.statcan.gc.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit Statistics Canada →</a>
-                </div>
-                
-                <div class="source-card bg-blue-50 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">City of Burlington Reports</h2>
-                    <p class="text-gray-700 mb-4">Official publications and reports from the City of Burlington provide local context and specific municipal data.</p>
-                    <div class="mb-4">
-                        <h3 class="font-semibold mb-2">Datasets provided:</h3>
-                        <ul class="list-disc list-inside text-gray-600">
-                            <li>Local housing strategy documents</li>
-                            <li>Official plan and zoning data</li>
-                            <li>Municipal demographic reports</li>
-                            <li>Housing needs assessments</li>
-                        </ul>
-                    </div>
-                    <a href="https://www.burlington.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit City of Burlington →</a>
-                </div>
-                
-                <div class="source-card bg-blue-50 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Teranet-National Bank House Price Index</h2>
-                    <p class="text-gray-700 mb-4">Provides reliable data on housing price trends across Canadian municipalities.</p>
-                    <div class="mb-4">
-                        <h3 class="font-semibold mb-2">Datasets provided:</h3>
-                        <ul class="list-disc list-inside text-gray-600">
-                            <li>Historical home price data</li>
-                            <li>Price index comparisons</li>
-                            <li>Market trend analysis</li>
-                        </ul>
-                    </div>
-                    <a href="https://housepriceindex.ca" target="_blank" class="text-blue-600 hover:underline font-medium">Visit House Price Index →</a>
-                </div>
-            </div>
-            
-            <!-- Detailed Data Source Table -->
-            <div class="bg-gray-50 p-6 rounded-xl">
-                <h2 class="text-3xl font-semibold mb-6">Detailed Data References</h2>
-                <p class="text-gray-700 mb-8">Below is a comprehensive table showing exactly which data points come from which sources.</p>
-                
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="py-3 px-4 text-left font-semibold">Data Point</th>
-                                <th class="py-3 px-4 text-left font-semibold">Source</th>
-                                <th class="py-3 px-4 text-left font-semibold">Publication Date</th>
-                                <th class="py-3 px-4 text-left font-semibold">Link</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <tr>
-                                <td class="py-3 px-4">Burlington Housing Prices (2010-2024)</td>
-                                <td class="py-3 px-4">Teranet-National Bank House Price Index</td>
-                                <td class="py-3 px-4">Q1 2024</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Report</a></td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="py-3 px-4">Ontario Median Income Data</td>
-                                <td class="py-3 px-4">Statistics Canada</td>
-                                <td class="py-3 px-4">2023 Census</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Data</a></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">Burlington Rental Market Survey</td>
-                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
-                                <td class="py-3 px-4">October 2024</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Survey</a></td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="py-3 px-4">Housing Starts and Completions</td>
-                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
-                                <td class="py-3 px-4">2024</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Data</a></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">Burlington Population Data</td>
-                                <td class="py-3 px-4">Statistics Canada</td>
-                                <td class="py-3 px-4">2021 Census</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Census</a></td>
-                            </tr>
-                            <tr class="bg-gray-50">
-                                <td class="py-3 px-4">Vacancy Rate Data</td>
-                                <td class="py-3 px-4">Canada Mortgage and Housing Corporation</td>
-                                <td class="py-3 px-4">October 2024</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">View Report</a></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">Inter-City Comparison Data</td>
-                                <td class="py-3 px-4">Various Sources (Compilation)</td>
-                                <td class="py-3 px-4">2024</td>
-                                <td class="py-3 px-4"><a href="#" class="text-blue-600 hover:underline">Methodology</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Methodology Section -->
-            <div class="mt-12 bg-blue-50 p-6 rounded-xl">
-                <h2 class="text-2xl font-semibold mb-4">Methodology Note</h2>
-                <p class="text-gray-700 mb-4">All data analysis follows standard statistical practices. Where data from different sources are combined or compared, adjustments have been made for consistency in:</p>
-                <ul class="list-disc list-inside text-gray-700 mb-4">
-                    <li>Inflation adjustment to 2024 dollars</li>
-                    <li>Standardized geographic boundaries</li>
-                    <li>Consistent time periods for comparison</li>
-                    <li>Per capita calculations using consistent population data</li>
-                </ul>
-                <p class="text-gray-700">For specific methodological questions, please <a href="#" class="text-blue-600 hover:underline">contact our research team</a>.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-2xl font-bold">BuildBurlington</h3>
-                    <p class="text-gray-400">A campaign for housing solutions</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white">Contact</a>
-                    <a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
