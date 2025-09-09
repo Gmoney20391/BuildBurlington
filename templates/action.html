@@ -232,13 +232,24 @@
     </style>
 </head>
 <body class="font-sans bg-gray-50">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Middle Housing Solution - Build Burlington</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Your existing styles and scripts here -->
+</head>
+<body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <a href="/" class="flex items-center py-2 text-blue-600">
-                        <span class="font-bold text-xl" style="color: #1a365d;">BuildBurlington</span>
+                        <span class="font-bold text-xl text-navy-900">BuildBurlington</span>
                     </a>
                 </div>
                 
@@ -249,7 +260,9 @@
                     <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
                     <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
                     <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
-                    <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300" style="background-color: #1a365d;">Support the Policy</a>
+                   <a href="/action" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-blue-950 hover:bg-blue-900">
+    Support the Policy
+</a>
                 </div>
                 
                 <!-- Hamburger Button -->
@@ -270,58 +283,39 @@
                     <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
                     <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
                     <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
-                    <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2" style="background-color: #1a365d;">Support the Policy</a>
+                    <a href="/action" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-blue-950 hover:bg-blue-900">
+    Support the Policy
+</a>
                 </div>
             </div>
         </div>
     </nav>
+    <!-- Rest of your content -->
 
-    
     <script>
-        // Hamburger menu functionality
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+    // Mobile menu toggle functionality
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    hamburgerBtn.addEventListener('click', () => {
+        hamburgerBtn.classList.toggle('hamburger-active');
+        mobileMenu.classList.toggle('mobile-menu-open');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const isClickInsideMenu = mobileMenu.contains(e.target);
+        const isClickOnHamburger = hamburgerBtn.contains(e.target);
         
-        hamburgerBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburgerBtn.classList.toggle('hamburger-active');
-            mobileMenu.classList.toggle('mobile-menu-open');
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const isClickInsideMenu = mobileMenu.contains(e.target);
-            const isClickOnHamburger = hamburgerBtn.contains(e.target);
-            
-            if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
-                hamburgerBtn.classList.remove('hamburger-active');
-                mobileMenu.classList.remove('mobile-menu-open');
-            }
-        });
-        
-        // Close menu when a link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburgerBtn.classList.remove('hamburger-active');
-                mobileMenu.classList.remove('mobile-menu-open');
-            });
-        });
-        
-        // Display current screen width and navigation mode
-        function updateScreenInfo() {
-            const width = window.innerWidth;
-            document.getElementById('screen-width').textContent = width;
-            
-            const mode = width > 950 ? 'Desktop' : 'Mobile';
-            document.getElementById('nav-mode').textContent = mode;
+        if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
+            hamburgerBtn.classList.remove('hamburger-active');
+            mobileMenu.classList.remove('mobile-menu-open');
         }
-        
-        window.addEventListener('resize', updateScreenInfo);
-        window.addEventListener('load', updateScreenInfo);
+    });
+    
+    
     </script>
-</body>
-</html>
+
     <!-- Hero Section - UPDATED WITH NEW STATS -->
     <section class="hero-pattern pt-32 pb-24 text-white">
         <div class="max-w-6xl mx-auto px-4 text-center">
@@ -335,7 +329,7 @@
                 </div>
                 <div class="stat-highlight">
                     <div class="text-4xl font-bold mb-2">#1</div>
-                    <p class="text-sm opacity-90">Lowest construction rate in Ontario</p>
+                    <p class="text-sm opacity-90">Lowest construction rate in the GTA</p>
                 </div>
                 <div class="stat-highlight">
                     <div class="text-4xl font-bold mb-2">15x</div>
@@ -359,8 +353,8 @@
                     <p class="opacity-90">Of Burlington residents support more housing options in neighborhoods</p>
                 </div>
                 <div class="impact-stat p-6 text-white text-center">
-                    <div class="text-4xl font-bold mb-2">3-1</div>
-                    <p class="opacity-90">City Council responds to constituent feedback on housing issues</p>
+                    <div class="text-4xl font-bold mb-2">100</div>
+                    <p class="opacity-90">100 signatures on the petition could change burlington for the better. Be one of them!</p>
                 </div>
                 <div class="impact-stat p-6 text-white text-center">
                     <div class="text-4xl font-bold mb-2">23K</div>
@@ -372,251 +366,197 @@
 
     <!-- Ways to Take Action -->
     <section class="py-16 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">How You Can Make a Difference</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Even small actions can create big change. Here's how you can help solve Burlington's housing crisis.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="action-card bg-white p-8">
-                    <div class="action-step mb-6">
-                        <div class="action-step-number">1</div>
-                        <h3 class="text-2xl font-semibold mb-3">Join the Newsletter</h3>
-                        <p class="text-gray-600">Stay informed about housing policy updates and advocacy opportunities.</p>
-                    </div>
-                    <div class="progress-bar bg-gray-200 mb-4">
-                        <div class="progress-fill bg-green-500" style="width: 65%"></div>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 mb-6">
-                        <span>1,923 subscribers</span>
-                        <span>Goal: 3,000</span>
-                    </div>
-                    <a href="#newsletter" class="btn-primary inline-block w-full text-center">Subscribe Now</a>
-                </div>
-                
-                <div class="action-card bg-white p-8">
-                    <div class="action-step mb-6">
-                        <div class="action-step-number">2</div>
-                        <h3 class="text-2xl font-semibold mb-3">Contact City Council</h3>
-                        <p class="text-gray-600">Send a message to your representatives urging them to support housing reform.</p>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-6">Use our template to make it quick and easy.</p>
-                    <a href="#contact" class="btn-primary inline-block w-full text-center">Contact Now</a>
-                </div>
-                
-                <div class="action-card bg-white p-8">
-                    <div class="action-step mb-6">
-                        <div class="action-step-number">3</div>
-                        <h3 class="text-2xl font-semibold mb-3">Share on Social Media</h3>
-                        <p class="text-gray-600">Spread the word to your friends and neighbors about the housing crisis solution.</p>
-                    </div>
-                    <div class="flex space-x-4 justify-center">
-                        <a href="#" class="social-share facebook">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-share twitter">
-                            <svg class="w-5 h-5" fill="CurrentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-share email">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-5.727V12.91L12 16.636l-4.636-3.727V21H1.636A1.636 1.636 0 010 19.364V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.91 12 9.546l6.545-4.636 1.528-1.417C21.69 2.279 24 3.434 24 5.457z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="action-card bg-white p-8">
-                    <div class="action-step mb-6">
-                        <div class="action-step-number">4</div>
-                        <h3 class="text-2xl font-semibold mb-3">Attend a Council Meeting</h3>
-                        <p class="text-gray-600">Show your support in person at the next City Council meeting.</p>
-                    </div>
-                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                        <p class="text-blue-800 text-sm"><strong>Next meeting:</strong> October 15, 2024 at 6:30 PM</p>
-                        <p class="text-blue-800 text-sm"><strong>Location:</strong> Burlington City Hall</p>
-                    </div>
-                    <a href="#" class="btn-primary inline-block w-full text-center">Add to Calendar</a>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">How You Can Make a Difference</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">Even small actions can create big change. Here's how you can help solve Burlington's housing crisis.</p>
+    </div>
 
-    <!-- Newsletter Section -->
-    <section id="newsletter" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="navy-box p-8">
-                    <h2 class="text-2xl font-bold mb-4 text-white">Stay Informed with Our Newsletter</h2>
-                    <p class="mb-4">Our newsletter provides essential updates on Burlington's housing policy developments, including:</p>
-                    <ul class="list-disc list-inside space-y-2 mb-6">
-                        <li>Upcoming council meetings and housing policy votes</li>
-                        <li>Analysis of proposed zoning changes and their impacts</li>
-                        <li>Opportunities to provide public input on housing initiatives</li>
-                        <li>Progress on missing middle housing implementation</li>
-                        <li>Local events and community discussions about housing</li>
-                    </ul>
-                    <p>By subscribing, you'll join a community of informed citizens working together to address Burlington's housing challenges.</p>
-                </div>
-                
-                <div class="bg-gray-50 p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-xl font-semibold mb-6 text-center">Subscribe to Our Newsletter</h3>
-                    
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-gray-700 mb-2">First Name</label>
-                                <input type="text" class="form-input w-full" placeholder="Your first name">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2">Last Name</label>
-                                <input type="text" class="form-input w-full" placeholder="Your last name">
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">Email Address</label>
-                            <input type="email" class="form-input w-full" placeholder="Your email address">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">Postal Code (optional)</label>
-                            <input type="text" class="form-input w-full" placeholder="Your postal code">
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <input type="checkbox" id="updates" class="mt-1 mr-3" checked>
-                            <label for="updates" class="text-gray-600 text-sm">Yes, I want to receive updates about housing policy and advocacy opportunities.</label>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary w-full text-lg py-3">Subscribe Now</button>
-                        
-                        <p class="text-gray-500 text-sm text-center">We respect your privacy. You can unsubscribe at any time.</p>
-                    </form>
-                </div>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Card 1 -->
+      <div class="action-card bg-white p-8 flex flex-col">
+        <div class="action-step mb-6">
+          <div class="action-step-number">1</div>
+          <h3 class="text-2xl font-semibold mb-3">Sign The Petition</h3>
+          <p class="text-gray-600">Stay informed about housing policy updates and advocacy opportunities.</p>
         </div>
-    </section>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScvBrnZpWtnkUPPRW8K2mMnBMtm-b5b0mXPo5A-fDRRgc7i4g/viewform?usp=sharing" class="btn-primary inline-block w-full text-center mt-auto">Sign The Petition</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="action-card bg-white p-8 flex flex-col">
+        <div class="action-step mb-6">
+          <div class="action-step-number">2</div>
+          <h3 class="text-2xl font-semibold mb-3">Contact City Council</h3>
+          <p class="text-gray-600">Send a message to your representatives urging them to support housing reform.</p>
+        </div>
+        
+        <a href="#contact" class="btn-primary inline-block w-full text-center mt-auto">Contact Now</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="action-card bg-white p-8 flex flex-col">
+        <div class="action-step mb-6">
+          <div class="action-step-number">3</div>
+          <h3 class="text-2xl font-semibold mb-3">Do More Research</h3>
+          <p class="text-gray-600">Visit Burlington's Official Plan to get more information. Read as much as you can to be the most informed possible.</p>
+        </div>
+        <a href="#Council" class="btn-primary inline-block w-full text-center mt-auto">View Research</a>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="action-card bg-white p-8 flex flex-col">
+        <div class="action-step mb-6">
+          <div class="action-step-number">4</div>
+          <h3 class="text-2xl font-semibold mb-3">Attend a Council Meeting</h3>
+          <p class="text-gray-600">Show your support in person at the next City Council meeting.</p>
+        </div>
+        <div class="bg-blue-50 p-4 rounded-lg mb-6">
+          <p class="text-blue-800 text-sm"><strong>Next meeting:</strong> October 15, 2024 at 6:30 PM</p>
+          <p class="text-blue-800 text-sm"><strong>Location:</strong> Burlington City Hall</p>
+        </div>
+        <a href="#Council" class="btn-primary inline-block w-full text-center mt-auto">View Meeting Times</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 
     <!-- Contact Council Section -->
-    <section id="contact" class="py-16 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Contact City Council</h2>
-                <p class="text-xl text-gray-600">Personal messages to council members have the most impact.</p>
-            </div>
-            
-            <div class="bg-white p-8 rounded-2xl shadow-sm">
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold mb-4">Message Template</h3>
-                    <div class="bg-blue-50 p-6 rounded-lg">
-                        <p class="text-blue-800 mb-4">Dear Mayor [Name] and City Council members,</p>
-                        <p class="text-blue-800 mb-4">I'm writing to express my strong support for allowing missing middle housing options in Burlington's residential neighborhoods.</p>
-                        <p class="text-blue-800 mb-4">As a resident, I've seen firsthand how our housing crisis is affecting our community. Allowing duplexes, triplexes, and fourplexes in single-family neighborhoods would create more affordable housing options while preserving neighborhood character.</p>
-                        <p class="text-blue-800 mb-4">I urge you to support zoning reforms that would make this possible. Thank you for considering my perspective on this important issue.</p>
-                        <p class="text-blue-800">Sincerely,<br>[Your Name]<br>Burlington Resident</p>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <h3 class="text-xl font-semibold mb-4">Send Your Message</h3>
-                    <p class="text-gray-600 mb-4">Copy and paste the message above into your email client and send to:</p>
-                    <div class="bg-gray-100 p-4 rounded-lg">
-                        <p class="text-sm font-mono">mayor@burlington.ca, councillor_galbraith@burlington.ca, councillor_kearns@burlington.ca, councillor_nisan@burlington.ca, councillor_stolte@burlington.ca, councillor_bentivegna@burlington.ca, councillor_sharman@burlington.ca</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="contact" class="py-16 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">Contact City Council</h2>
+      <p class="text-xl text-gray-600">Personal messages to council members have the most impact. Use the template below or email them directly.</p>
+    </div>
+
+    <!-- Email Template Card -->
+    <div class="bg-white p-8 rounded-2xl shadow-lg mb-8">
+      <h3 class="text-xl font-semibold mb-4">Message Template</h3>
+      <div class="bg-blue-50 p-6 rounded-lg">
+        <p class="text-blue-800 mb-4">Dear Mayor [Name] and City Council members,</p>
+        <p class="text-blue-800 mb-4">I'm writing to express my strong support for allowing missing middle housing options in Burlington's residential neighborhoods.</p>
+        <p class="text-blue-800 mb-4">As a resident, I've seen firsthand how our housing crisis is affecting our community. Allowing duplexes, triplexes, and fourplexes in single-family neighborhoods would create more affordable housing options while preserving neighborhood character.</p>
+        <p class="text-blue-800 mb-4">I urge you to support zoning reforms that would make this possible. Thank you for considering my perspective on this important issue.</p>
+        <p class="text-blue-800">Sincerely,<br>[Your Name]<br>Burlington Resident</p>
+      </div>
+    </div>
+
+    <!-- Email Buttons Card -->
+<div class="bg-white p-8 rounded-2xl shadow-lg">
+  <h3 class="text-xl font-semibold mb-4">Quick Email Links</h3>
+  <p class="text-gray-600 mb-6">Click an email below to open your email client with the address pre-filled:</p>
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+    <a href="mailto:mayor@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Mayor Marianne Meed Ward
+    </a>
+    <a href="mailto:kelvin.galbraith@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Kelvin Galbraith (Ward 1)
+    </a>
+    <a href="mailto:lisa.kearns@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Lisa Kearns (Ward 2)
+    </a>
+    <a href="mailto:rory.nisan@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Rory Nisan (Ward 3)
+    </a>
+    <a href="mailto:shawna.stolte@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Shawna Stolte (Ward 4)
+    </a>
+    <a href="mailto:paul.sharman@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Paul Sharman (Ward 5)
+    </a>
+    <a href="mailto:angelo.bentivegna@burlington.ca" class="px-4 py-2 bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition text-center">
+      Councillor Angelo Bentivegna (Ward 6)
+    </a>
+  </div>
+</div>
+</section>
+
+<style>
+  /* Custom navy color for your buttons */
+  .bg-navy-900 { background-color: #1a365d; }
+  .hover\:bg-navy-800:hover { background-color: #153060; }
+</style>
+
+
 
     <!-- Council Meetings Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Upcoming Housing Policy Meetings</h2>
-                <p class="text-xl text-gray-600">Mark your calendar for these important meetings about Burlington's housing future</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="navy-box p-8">
-                    <h3 class="text-xl font-bold mb-4 text-white">2024 Housing Policy Meeting Schedule</h3>
-                    <div class="space-y-6">
-                        <div class="border-b border-blue-300 pb-4">
-                            <h4 class="font-semibold text-blue-200">October 15, 2024 - 6:30 PM</h4>
-                            <p class="text-white">City Hall Council Chambers</p>
-                            <p class="text-blue-200">Discussion on Missing Middle Housing Implementation</p>
-                        </div>
-                        <div class="border-b border-blue-300 pb-4">
-                            <h4 class="font-semibold text-blue-200">November 12, 2024 - 6:30 PM</h4>
-                            <p class="text-white">City Hall Council Chambers</p>
-                            <p class="text-blue-200">Zoning Bylaw Amendment Review</p>
-                        </div>
-                        <div class="border-b border-blue-300 pb-4">
-                            <h4 class="font-semibold text-blue-200">December 10, 2024 - 6:30 PM</h4>
-                            <p class="text-white">City Hall Council Chambers</p>
-                            <p class="text-blue-200">Housing Affordability Strategy Update</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-blue-200">January 14, 2025 - 6:30 PM</h4>
-                            <p class="text-white">City Hall Council Chambers</p>
-                            <p class="text-blue-200">Annual Development Charges Review</p>
-                        </div>
+<section class="py-16 bg-white" id="Council">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Upcoming Housing Policy Meetings</h2>
+            <p class="text-xl text-gray-600">Mark your calendar for these important meetings about Burlington's housing future</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="navy-box p-8">
+                <h3 class="text-xl font-bold mb-4 text-white">2025 Housing Policy Meeting Schedule</h3>
+                <div class="space-y-6">
+                    <div class="border-b border-blue-300 pb-4">
+                        <h4 class="font-semibold text-blue-200">September 16, 2025 - 6:30 PM</h4>
+                        <p class="text-white">Mountainside Community Centre, Community Room 2</p>
+                        <p class="text-blue-200">Statutory Open House for the New Residential Zoning Bylaw</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-blue-200">October 7, 2025 - 9:30 AM</h4>
+                        <p class="text-white">City Hall Council Chambers</p>
+                        <p class="text-blue-200">Statutory Public Meeting for the New Residential Zoning Bylaw</p>
                     </div>
                 </div>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-2xl">
+                <h3 class="text-xl font-semibold mb-4">How to Participate</h3>
+                <p class="text-gray-600 mb-4">Your voice matters in these important discussions. Here's how you can participate:</p>
                 
-                <div class="bg-gray-50 p-8 rounded-2xl">
-                    <h3 class="text-xl font-semibold mb-4">How to Participate</h3>
-                    <p class="text-gray-600 mb-4">Your voice matters in these important discussions. Here's how you can participate:</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold">Attend in Person</h4>
-                                <p class="text-sm text-gray-600">City Hall, 426 Brant Street, Burlington. Arrive early to sign up for delegation speaking slots.</p>
-                            </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
                         </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold">Watch Online</h4>
-                                <p class="text-sm text-gray-600">All meetings are streamed live on the City of Burlington's YouTube channel and website.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-2 rounded-full mr-3">
-                                <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold">Submit Written Comments</h4>
-                                <p class="text-sm text-gray-600">Email your comments to clerks@burlington.ca before 9:00 AM on the day of the meeting.</p>
-                            </div>
+                        <div>
+                            <h4 class="font-semibold">Attend in Person</h4>
+                            <p class="text-sm text-gray-600">City Hall, 426 Brant Street, Burlington. Arrive early to sign up for delegation speaking slots.</p>
                         </div>
                     </div>
                     
-                    <div class="mt-6">
-                        <a href="#" class="btn-primary inline-block w-full text-center">Add All Meetings to Calendar</a>
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Watch Online</h4>
+                            <p class="text-sm text-gray-600">All meetings are streamed live on the City of Burlington's YouTube channel and website.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Submit Written Comments</h4>
+                            <p class="text-sm text-gray-600">Email your comments to newzoning@burlington.ca before October 5, 2025.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- FAQ Section -->
     <section class="py-16 bg-gray-50">
@@ -651,50 +591,22 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">BuildBurlington</h3>
-                    <p class="text-gray-400">Working to solve Burlington's housing crisis through policy reform and community engagement.</p>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Navigation</h4>
-                    <ul class="space-y-2">
-                        <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
-                        <li><a href="/problem" class="text-gray-400 hover:text-white">The Problem</a></li>
-                        <li><a href="/solution" class="text-gray-400 hover:text-white">The Solution</a></li>
-                        <li><a href="/action" class="text-gray-400 hover:text-white">Take Action</a></li>
-                        <li><a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Housing Data</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Policy Papers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Council Contacts</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Meeting Schedule</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Connect</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Email Newsletter</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Twitter</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Facebook</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Instagram</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
-                <p>© 2024 BuildBurlington. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <footer class="bg-slate-900 text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="text-xl font-bold text-white">BuildBurlington</div>
+        <div class="text-slate-400 text-sm">A campaign for housing solutions</div>
+      </div>
+      <div class="flex gap-6 text-sm">
+        <a href="/action" class="hover:text-white">Take Action</a>
+        <a href="/sources" class="hover:text-white">Data Sources</a>
+      </div>
+    </div>
+    <div class="border-t border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+        © 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

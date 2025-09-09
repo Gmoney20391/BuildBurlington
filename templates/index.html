@@ -92,7 +92,7 @@
         }
     </style>
 </head>
-<body class="class="font-sans bg-gray-50" id="home-page"">
+<body class="font-sans bg-gray-50" id="home-page">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
@@ -110,7 +110,7 @@
                     <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
                     <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
                     <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
-                    <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
+                    <a href="/action" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
                 </div>
                 
                 <!-- Hamburger Button -->
@@ -131,7 +131,7 @@
                     <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
                     <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
                     <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
-                    <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
+                    <a href="/action" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
                 </div>
             </div>
         </div>
@@ -188,9 +188,9 @@
             <h2 class="text-3xl font-bold text-center mb-12 text-navy-900">By the numbers: Burlington's housing crisis</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-red-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                    <div class="text-4xl font-bold text-red-600 mb-2">12.3x</div>
+                    <div class="text-4xl font-bold text-red-600 mb-2">7.5x</div>
                     <h3 class="text-xl font-semibold mb-2 text-navy-900">Price-to-Income Ratio</h3>
-                    <p class="text-gray-600">Burlington homes cost <span class="font-bold">12.3 times</span> the median household income. A healthy ratio is 4x.</p>
+                    <p class="text-gray-600">Burlington homes cost <span class="font-bold">7.5 times</span> the median household income. A healthy ratio is 4x.</p>
                 </div>
                 <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-red-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <div class="text-4xl font-bold text-red-600 mb-2">1.8%</div>
@@ -338,10 +338,7 @@
                             <div class="text-2xl font-bold mr-4 text-navy-900">2</div>
                             <p class="font-medium">Streamline approval processes for missing middle housing</p>
                         </div>
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-navy">
-                            <div class="text-2xl font-bold mr-4 text-navy-900">3</div>
-                            <p class="font-medium">Protect renters from displacement through "renoviction" rules</p>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -375,8 +372,8 @@
                 
                 <div class="bg-white p-6 rounded-lg shadow-navy">
                     <div class="text-4xl mb-4">📣</div>
-                    <h3 class="text-xl font-semibold mb-2 text-navy-900">Spread the Word</h3>
-                    <p class="mb-4 text-gray-600">Share this website with your friends, family, and neighbors.</p>
+                    <h3 class="text-xl font-semibold mb-2 text-navy-900">Sign The Petition</h3>
+                    <p class="mb-4 text-gray-600">Sign the petition to make a real impact in your own community</p>
                     <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white shadow-navy bg-navy-900 hover:bg-navy-800">Share</a>
                 </div>
             </div>
@@ -384,25 +381,269 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-2xl font-bold text-white">BuildBurlington</h3>
-                    <p class="text-gray-400">A campaign for housing solutions</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white">Contact</a>
-                    <a href="/sources" class="text-gray-400 hover:text-white">Data Sources</a>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.</p>
-            </div>
-        </div>
-    </footer>
+    <footer class="bg-slate-900 text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="text-xl font-bold text-white">BuildBurlington</div>
+        <div class="text-slate-400 text-sm">A campaign for housing solutions</div>
+      </div>
+      <div class="flex gap-6 text-sm">
+        <a href="/action" class="hover:text-white">Take Action</a>
+        <a href="/sources" class="hover:text-white">Data Sources</a>
+      </div>
+    </div>
+    <div class="border-t border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+        © 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
+      </div>
+    </div>
+  </footer>
 
-    <script src="/static/js/main.js"></script>
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let priceIncomeChart = null;
+        let comparisonChart = null;
+        let rentChart = null;
+        let vacancyChart = null;
+        let timelineVRChart = null;
+        let timelinePopChart = null;
+        let burlingtonPieChart = null;
+        let cityComparisonChart = null;
+
+        // ===== UTILITY FUNCTIONS =====
+        const parseNum = (v) => (typeof v === 'number' ? v : parseFloat(String(v).replace(/[^0-9.\-]/g, '')));
+        const moneyFmt = (n) => n != null && !isNaN(n) ? '$' + Math.round(n).toLocaleString() : '—';
+        const pctFmt = (n) => n != null && !isNaN(n) ? (Math.round(n * 10) / 10) + '%' : '—';
+
+        // ===== HAMBURGER MENU FUNCTIONALITY =====
+        function initHamburgerMenu() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (!hamburgerBtn || !mobileMenu) return;
+            
+            hamburgerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hamburgerBtn.classList.toggle('hamburger-active');
+                mobileMenu.classList.toggle('mobile-menu-open');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const isClickInsideMenu = mobileMenu.contains(e.target);
+                const isClickOnHamburger = hamburgerBtn.contains(e.target);
+                
+                if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
+                    hamburgerBtn.classList.remove('hamburger-active');
+                    mobileMenu.classList.remove('mobile-menu-open');
+                }
+            });
+            
+            // Close menu when a link is clicked
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('hamburger-active');
+                    mobileMenu.classList.remove('mobile-menu-open');
+                });
+            });
+        }
+
+        // ===== HOME PAGE CALCULATOR =====
+        function initHomeCalculator() {
+            const incomeSlider = document.getElementById('income-slider');
+            const incomeValue = document.getElementById('income-value');
+            const savingsSlider = document.getElementById('savings-slider');
+            const savingsValue = document.getElementById('savings-value');
+            const simulatorResults = document.getElementById('simulator-results');
+            
+            if (!incomeSlider || !savingsSlider) return;
+            
+            function updateCalculator() {
+                const income = parseInt(incomeSlider.value);
+                const savings = parseInt(savingsSlider.value);
+                incomeValue.textContent = `$${income.toLocaleString()}`;
+                savingsValue.textContent = `$${savings.toLocaleString()}`;
+                
+                const affordablePrice = income * 4;
+                const downPaymentYears = ((1100000 * 0.2) / savings).toFixed(1);
+                const affordableMortgage = (affordablePrice * 0.05 / 12).toFixed(0);
+                const actualMortgage = (1100000 * 0.05 / 12).toFixed(0);
+                
+                simulatorResults.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span>Affordable home price:</span>
+                        <span class="font-bold text-green-600">$${affordablePrice.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Actual Burlington median price:</span>
+                        <span class="font-bold text-red-600">$1,100,000</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Monthly mortgage payment (at affordable price):</span>
+                        <span class="font-bold">$${affordableMortgage}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Monthly mortgage payment (at actual price):</span>
+                        <span class="font-bold text-red-600">$${actualMortgage}</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>Years to save a 20% down payment:</span>
+                        <span class="font-bold text-red-600">${downPaymentYears} years</span>
+                    </div>
+                `;
+            }
+            
+            incomeSlider.addEventListener('input', updateCalculator);
+            savingsSlider.addEventListener('input', updateCalculator);
+            updateCalculator();
+        }
+
+        // ===== PREVIEW CHARTS FOR HOMEPAGE =====
+        function initPreviewCharts() {
+            const priceIncomePreviewCtx = document.getElementById('preview-price-income-chart');
+            const comparisonPreviewCtx = document.getElementById('preview-comparison-chart');
+            
+            if (priceIncomePreviewCtx) {
+                // Simplified version of price vs income chart for homepage with single y-axis
+                const years = ['2015', '2017', '2019', '2021', '2023'];
+                const priceData = [510000, 650000, 780000, 1050000, 1100000];
+                const incomeData = [80800, 83400, 84800, 92000, 89300];
+                
+                new Chart(priceIncomePreviewCtx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [
+                            {
+                                label: 'Median Home Price',
+                                data: priceData,
+                                borderColor: 'rgb(239, 68, 68)',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                tension: 0.3,
+                                fill: true,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: 'Median Income',
+                                data: incomeData,
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.3,
+                                fill: true,
+                                yAxisID: 'y'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.parsed.y !== null ? '$' + context.parsed.y.toLocaleString() : '';
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { 
+                                display: true,
+                                type: 'linear',
+                                title: {
+                                    display: true,
+                                    text: 'Dollars ($)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            if (comparisonPreviewCtx) {
+                // Simplified comparison chart for homepage
+                const cities = ['Burlington', 'Oakville', 'Milton', 'Hamilton'];
+                const completionData = [0.8, 1.2, 1.5, 1.4];
+                
+                new Chart(comparisonPreviewCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: cities,
+                        datasets: [{
+                            label: 'Housing Completions per 1,000 Residents',
+                            data: completionData,
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(59, 130, 246, 0.6)',
+                                'rgba(59, 130, 246, 0.6)',
+                                'rgba(59, 130, 246, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgb(239, 68, 68)',
+                                'rgb(59, 130, 246)',
+                                'rgb(59, 130, 246)',
+                                'rgb(59, 130, 246)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + context.parsed.y;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { 
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Completions per 1,000 Residents'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ===== INITIALIZE PAGE-SPECIFIC FUNCTIONALITY =====
+        function initPageSpecific() {
+            const bodyId = document.body.id;
+            
+            switch(bodyId) {
+                case 'home-page':
+                    initHomeCalculator();
+                    initPreviewCharts();
+                    break;
+            }
+        }
+
+        // ===== DOCUMENT READY =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initHamburgerMenu();
+            initPageSpecific();
+        });
+    </script>
 </body>
 </html>

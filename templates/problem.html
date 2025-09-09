@@ -97,51 +97,56 @@
       }
     }
   </style>
-</head>
-<body class="font-sans bg-gray-50">
-  <!-- Navigation -->
-  <nav class="bg-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
-        <div class="flex items-center">
-          <a href="/" class="flex items-center py-2 text-blue-600">
-            <span class="font-bold text-xl text-navy-900">BuildBurlington</span>
-          </a>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center py-2 text-blue-600">
+                        <span class="font-bold text-xl text-navy-900">BuildBurlington</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Items -->
+                <div class="nav-items items-center space-x-6">
+                    <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
+                    <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
+                    <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600 font-semibold text-navy-900">The Solution</a>
+                    <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
+                    <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
+                    <a href="/action" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
+                </div>
+                
+                <!-- Hamburger Button -->
+                <div class="hamburger-button">
+                    <button id="hamburger-btn" class="focus:outline-none">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu bg-white">
+                <div class="px-2 pt-2 pb-4 space-y-1">
+                    <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
+                    <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
+                    <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
+                    <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
+                    <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
+                    <a href="/action" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
+                </div>
+            </div>
         </div>
-        
-        <!-- Desktop Navigation Items -->
-        <div class="nav-items items-center space-x-6">
-          <a href="/" class="py-2 text-gray-700 hover:text-blue-600">Home</a>
-          <a href="/problem" class="py-2 text-gray-700 hover:text-blue-600">The Problem</a>
-          <a href="/solution" class="py-2 text-gray-700 hover:text-blue-600">The Solution</a>
-          <a href="/action" class="py-2 text-gray-700 hover:text-blue-600">Take Action</a>
-          <a href="/sources" class="py-2 text-gray-700 hover:text-blue-600">Data Sources</a>
-          <a href="#" class="py-4 px-6 text-white rounded-lg font-medium transition duration-300 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
-        </div>
-        
-        <!-- Hamburger Button -->
-        <div class="hamburger-button">
-          <button id="hamburger-btn" class="focus:outline-none">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="mobile-menu bg-white">
-        <div class="px-2 pt-2 pb-4 space-y-1">
-          <a href="/" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Home</a>
-          <a href="/problem" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Problem</a>
-          <a href="/solution" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">The Solution</a>
-          <a href="/action" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Take Action</a>
-          <a href="/sources" class="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded">Data Sources</a>
-          <a href="#" class="block py-3 px-4 text-white text-center rounded-lg font-medium mt-2 bg-navy-900 hover:bg-navy-800">Support the Policy</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
+
+    <!-- Rest of your content -->
+
+    
+</body>
+</html>
 
   <!-- Hero -->
   <header class="hero-pattern text-white">
@@ -161,7 +166,7 @@
           <div class="grid grid-cols-3 gap-4">
             <div class="bg-white rounded-xl p-4">
               <div class="text-xs text-slate-500">Price-to-Income</div>
-              <div class="text-2xl font-bold text-red-600">12.3×</div>
+              <div class="text-2xl font-bold text-red-600">7.5×</div>
               <div class="text-[11px] text-slate-500 mt-1">2023, CMHC + StatCan</div>
             </div>
             <div class="bg-white rounded-xl p-4">
@@ -343,14 +348,13 @@
         <div class="text-slate-400 text-sm">A campaign for housing solutions</div>
       </div>
       <div class="flex gap-6 text-sm">
-        <a href="#" class="hover:text-white">Privacy Policy</a>
-        <a href="#" class="hover:text-white">Contact</a>
+        <a href="/action" class="hover:text-white">Take Action</a>
         <a href="/sources" class="hover:text-white">Data Sources</a>
       </div>
     </div>
     <div class="border-t border-slate-800">
       <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
-        © 2024 BuildBurlington. Data: CMHC, Statistics Canada, City of Burlington.
+        © 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
       </div>
     </div>
   </footer>
@@ -466,10 +470,10 @@
     {Year: "2018", Rent_2Bedroom: 1405},
     {Year: "2019", Rent_2Bedroom: 1511},
     {Year: "2020", Rent_2Bedroom: 1623},
-    {Year: "2011", Rent_2Bedroom: 1631},
-    {Year: "2012", Rent_2Bedroom: 1757},
-    {Year: "2013", Rent_2Bedroom: 1823},
-    {Year: "2014", Rent_2Bedroom: 1993}
+    {Year: "2021", Rent_2Bedroom: 1631},
+    {Year: "2022", Rent_2Bedroom: 1757},
+    {Year: "2023", Rent_2Bedroom: 1823},
+    {Year: "2024", Rent_2Bedroom: 1993}
   ];
 
   const vacancyData = [
@@ -483,10 +487,10 @@
     {Year: "2018", Vacancy_Rate: 1.7},
     {Year: "2019", Vacancy_Rate: 1.7},
     {Year: "2020", Vacancy_Rate: 2.0},
-    {Year: "2011", Vacancy_Rate: 1.2},
-    {Year: "2012", Vacancy_Rate: 1.2},
-    {Year: "2013", Vacancy_Rate: 1.6},
-    {Year: "2014", Vacancy_Rate: 1.8}
+    {Year: "2021", Vacancy_Rate: 1.2},
+    {Year: "2022", Vacancy_Rate: 1.2},
+    {Year: "2023", Vacancy_Rate: 1.6},
+    {Year: "2024", Vacancy_Rate: 1.8}
   ];
 
   const housingGapData = [
@@ -500,10 +504,10 @@
     {Year: "2018", HousingGap: 5547},
     {Year: "2019", HousingGap: 6061},
     {Year: "2020", HousingGap: 6109},
-    {Year: "2011", HousingGap: 5673},
-    {Year: "2012", HousingGap: 8011},
-    {Year: "2013", HousingGap: 7725},
-    {Year: "2014", HousingGap: 7947}
+    {Year: "2021", HousingGap: 5673},
+    {Year: "2022", HousingGap: 8011},
+    {Year: "2023", HousingGap: 7725},
+    {Year: "2024", HousingGap: 7947}
   ];
 
   // Process comparison data
@@ -834,6 +838,7 @@
     // Set initial active button state
     document.querySelector('#chart-toggle-buttons button[onclick="updateChartType(\'both\')"]').classList.add('bg-blue-100', 'text-blue-700');
   });
+  
   </script>
 </body>
 </html>

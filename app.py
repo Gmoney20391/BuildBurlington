@@ -23,4 +23,4 @@ def sources():
     return render_template('sources.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
