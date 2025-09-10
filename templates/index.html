@@ -237,7 +237,7 @@
             <div class="p-6 rounded-xl mb-20 shadow-navy border-l-4 border-navy-900 bg-gradient-to-r from-blue-50 to-indigo-50">
                 <h3 class="text-2xl font-semibold mb-4 text-navy-900">How Burlington Compares</h3>
                 <p class="text-gray-700 mb-6">Burlington has one of the worst housing metrics in the GTA.</p>
-                <div class="h-64">
+                <div class="h-96">
                     <canvas id="preview-comparison-chart"></canvas>
                 </div>
                 <div class="text-center mt-6">
@@ -374,7 +374,7 @@
                     <div class="text-4xl mb-4">📣</div>
                     <h3 class="text-xl font-semibold mb-2 text-navy-900">Sign The Petition</h3>
                     <p class="mb-4 text-gray-600">Sign the petition to make a real impact in your own community</p>
-                    <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white shadow-navy bg-navy-900 hover:bg-navy-800">Share</a>
+                    <a href="/action" class="block w-full py-2 px-4 rounded-lg font-medium text-white shadow-navy bg-navy-900 hover:bg-navy-800">Sign Petition</a>
                 </div>
             </div>
         </div>
@@ -394,256 +394,12 @@
     </div>
     <div class="border-t border-slate-800">
       <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
-        © 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
+        © 2025 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
       </div>
     </div>
   </footer>
 
-    <script>
-        // ===== GLOBAL VARIABLES =====
-        let priceIncomeChart = null;
-        let comparisonChart = null;
-        let rentChart = null;
-        let vacancyChart = null;
-        let timelineVRChart = null;
-        let timelinePopChart = null;
-        let burlingtonPieChart = null;
-        let cityComparisonChart = null;
-
-        // ===== UTILITY FUNCTIONS =====
-        const parseNum = (v) => (typeof v === 'number' ? v : parseFloat(String(v).replace(/[^0-9.\-]/g, '')));
-        const moneyFmt = (n) => n != null && !isNaN(n) ? '$' + Math.round(n).toLocaleString() : '—';
-        const pctFmt = (n) => n != null && !isNaN(n) ? (Math.round(n * 10) / 10) + '%' : '—';
-
-        // ===== HAMBURGER MENU FUNCTIONALITY =====
-        function initHamburgerMenu() {
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (!hamburgerBtn || !mobileMenu) return;
-            
-            hamburgerBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                hamburgerBtn.classList.toggle('hamburger-active');
-                mobileMenu.classList.toggle('mobile-menu-open');
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (e) => {
-                const isClickInsideMenu = mobileMenu.contains(e.target);
-                const isClickOnHamburger = hamburgerBtn.contains(e.target);
-                
-                if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
-                    hamburgerBtn.classList.remove('hamburger-active');
-                    mobileMenu.classList.remove('mobile-menu-open');
-                }
-            });
-            
-            // Close menu when a link is clicked
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburgerBtn.classList.remove('hamburger-active');
-                    mobileMenu.classList.remove('mobile-menu-open');
-                });
-            });
-        }
-
-        // ===== HOME PAGE CALCULATOR =====
-        function initHomeCalculator() {
-            const incomeSlider = document.getElementById('income-slider');
-            const incomeValue = document.getElementById('income-value');
-            const savingsSlider = document.getElementById('savings-slider');
-            const savingsValue = document.getElementById('savings-value');
-            const simulatorResults = document.getElementById('simulator-results');
-            
-            if (!incomeSlider || !savingsSlider) return;
-            
-            function updateCalculator() {
-                const income = parseInt(incomeSlider.value);
-                const savings = parseInt(savingsSlider.value);
-                incomeValue.textContent = `$${income.toLocaleString()}`;
-                savingsValue.textContent = `$${savings.toLocaleString()}`;
-                
-                const affordablePrice = income * 4;
-                const downPaymentYears = ((1100000 * 0.2) / savings).toFixed(1);
-                const affordableMortgage = (affordablePrice * 0.05 / 12).toFixed(0);
-                const actualMortgage = (1100000 * 0.05 / 12).toFixed(0);
-                
-                simulatorResults.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span>Affordable home price:</span>
-                        <span class="font-bold text-green-600">$${affordablePrice.toLocaleString()}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span>Actual Burlington median price:</span>
-                        <span class="font-bold text-red-600">$1,100,000</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span>Monthly mortgage payment (at affordable price):</span>
-                        <span class="font-bold">$${affordableMortgage}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span>Monthly mortgage payment (at actual price):</span>
-                        <span class="font-bold text-red-600">$${actualMortgage}</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t pt-2">
-                        <span>Years to save a 20% down payment:</span>
-                        <span class="font-bold text-red-600">${downPaymentYears} years</span>
-                    </div>
-                `;
-            }
-            
-            incomeSlider.addEventListener('input', updateCalculator);
-            savingsSlider.addEventListener('input', updateCalculator);
-            updateCalculator();
-        }
-
-        // ===== PREVIEW CHARTS FOR HOMEPAGE =====
-        function initPreviewCharts() {
-            const priceIncomePreviewCtx = document.getElementById('preview-price-income-chart');
-            const comparisonPreviewCtx = document.getElementById('preview-comparison-chart');
-            
-            if (priceIncomePreviewCtx) {
-                // Simplified version of price vs income chart for homepage with single y-axis
-                const years = ['2015', '2017', '2019', '2021', '2023'];
-                const priceData = [510000, 650000, 780000, 1050000, 1100000];
-                const incomeData = [80800, 83400, 84800, 92000, 89300];
-                
-                new Chart(priceIncomePreviewCtx, {
-                    type: 'line',
-                    data: {
-                        labels: years,
-                        datasets: [
-                            {
-                                label: 'Median Home Price',
-                                data: priceData,
-                                borderColor: 'rgb(239, 68, 68)',
-                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                                tension: 0.3,
-                                fill: true,
-                                yAxisID: 'y'
-                            },
-                            {
-                                label: 'Median Income',
-                                data: incomeData,
-                                borderColor: 'rgb(59, 130, 246)',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                tension: 0.3,
-                                fill: true,
-                                yAxisID: 'y'
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { 
-                            legend: { position: 'bottom' },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        label += context.parsed.y !== null ? '$' + context.parsed.y.toLocaleString() : '';
-                                        return label;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: { 
-                                display: true,
-                                type: 'linear',
-                                title: {
-                                    display: true,
-                                    text: 'Dollars ($)'
-                                },
-                                ticks: {
-                                    callback: function(value) {
-                                        return '$' + value.toLocaleString();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            if (comparisonPreviewCtx) {
-                // Simplified comparison chart for homepage
-                const cities = ['Burlington', 'Oakville', 'Milton', 'Hamilton'];
-                const completionData = [0.8, 1.2, 1.5, 1.4];
-                
-                new Chart(comparisonPreviewCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: cities,
-                        datasets: [{
-                            label: 'Housing Completions per 1,000 Residents',
-                            data: completionData,
-                            backgroundColor: [
-                                'rgba(239, 68, 68, 0.8)',
-                                'rgba(59, 130, 246, 0.6)',
-                                'rgba(59, 130, 246, 0.6)',
-                                'rgba(59, 130, 246, 0.6)'
-                            ],
-                            borderColor: [
-                                'rgb(239, 68, 68)',
-                                'rgb(59, 130, 246)',
-                                'rgb(59, 130, 246)',
-                                'rgb(59, 130, 246)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { 
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return context.dataset.label + ': ' + context.parsed.y;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: { 
-                                display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Completions per 1,000 Residents'
-                                },
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-        // ===== INITIALIZE PAGE-SPECIFIC FUNCTIONALITY =====
-        function initPageSpecific() {
-            const bodyId = document.body.id;
-            
-            switch(bodyId) {
-                case 'home-page':
-                    initHomeCalculator();
-                    initPreviewCharts();
-                    break;
-            }
-        }
-
-        // ===== DOCUMENT READY =====
-        document.addEventListener('DOMContentLoaded', function() {
-            initHamburgerMenu();
-            initPageSpecific();
-        });
-    </script>
+    <!-- Link to the consolidated JavaScript file -->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
 </body>
 </html>

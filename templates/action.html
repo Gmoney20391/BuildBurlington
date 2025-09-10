@@ -163,17 +163,7 @@
             border-radius: 0.75rem;
             padding: 1.5rem;
         }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build Burlington - Fixed Navigation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+
         .hamburger-line {
             display: block;
             width: 25px;
@@ -292,29 +282,7 @@
     </nav>
     <!-- Rest of your content -->
 
-    <script>
-    // Mobile menu toggle functionality
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
     
-    hamburgerBtn.addEventListener('click', () => {
-        hamburgerBtn.classList.toggle('hamburger-active');
-        mobileMenu.classList.toggle('mobile-menu-open');
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        const isClickInsideMenu = mobileMenu.contains(e.target);
-        const isClickOnHamburger = hamburgerBtn.contains(e.target);
-        
-        if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('mobile-menu-open')) {
-            hamburgerBtn.classList.remove('hamburger-active');
-            mobileMenu.classList.remove('mobile-menu-open');
-        }
-    });
-    
-    
-    </script>
 
     <!-- Hero Section - UPDATED WITH NEW STATS -->
     <section class="hero-pattern pt-32 pb-24 text-white">
@@ -604,9 +572,10 @@
     </div>
     <div class="border-t border-slate-800">
       <div class="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
-        © 2024 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
+        © 2025 BuildBurlington. All data from public sources including CMHC, Statistics Canada, and City of Burlington reports.
       </div>
     </div>
   </footer>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
 </body>
 </html>
