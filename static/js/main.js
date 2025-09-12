@@ -295,7 +295,6 @@ const housingPriceTimeline = [
 
 // Housing gap timeline data from BurlingtonPopulation.csv
 const housingGapTimeline = [
-  { year: 2010, gap: 8114 },
   { year: 2011, gap: 4549 },
   { year: 2012, gap: 5785 },
   { year: 2013, gap: 5489 },
